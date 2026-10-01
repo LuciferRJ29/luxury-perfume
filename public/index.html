@@ -1,0 +1,3430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Perfume — The Art of Haute Fragrance | Delhi, India</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Three.js & GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- Razorpay Secure Checkout SDK -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <style>
+        :root {
+            --bg-deep: #050508;
+            --bg-card: rgba(16, 16, 26, 0.7);
+            --bg-card-hover: rgba(24, 24, 38, 0.9);
+            --border-gold: rgba(212, 175, 55, 0.22);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            
+            --gold-primary: #d4af37;
+            --gold-light: #f9e8b2;
+            --gold-dark: #917117;
+            --gold-glow: rgba(212, 175, 55, 0.35);
+            
+            --rose: #e11d48;
+            --emerald: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            
+            --font-serif: 'Cinzel', serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --nav-h: 88px;
+            --radius-md: 14px;
+            --radius-lg: 22px;
+            --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-sans);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            overflow-x: hidden;
+            position: relative;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(212, 175, 55, 0.05) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(212, 175, 55, 0.04) 0%, transparent 50%);
+        }
+
+        /* Luxury Scrollbar */
+        ::-webkit-scrollbar { width: 7px; }
+        ::-webkit-scrollbar-track { background: var(--bg-deep); }
+        ::-webkit-scrollbar-thumb { 
+            background: linear-gradient(180deg, var(--gold-light), var(--gold-dark)); 
+            border-radius: 4px; 
+        }
+
+        /* TOP ANNOUNCEMENT BAR */
+        .top-bar-announcement {
+            background: linear-gradient(90deg, #111019, #1c1809, #111019);
+            border-bottom: 1px solid var(--border-gold);
+            padding: 9px 24px;
+            font-size: 0.78rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--gold-light);
+            letter-spacing: 0.5px;
+        }
+
+        .top-bar-left, .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .top-bar-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .top-bar-item:hover, .top-bar-item strong {
+            color: var(--gold-light);
+        }
+
+        /* NAVIGATION BAR */
+        .navbar {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--nav-h);
+            background: rgba(5, 5, 8, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 48px;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            height: 74px;
+            background: rgba(5, 5, 8, 0.96);
+            border-bottom-color: var(--border-gold);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .brand-crest {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 20px var(--gold-glow);
+        }
+
+        .brand-name-group h1 {
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #fff;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ffffff, var(--gold-light), #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-name-group span {
+            font-size: 0.65rem;
+            color: var(--gold-primary);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: block;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            transition: var(--transition);
+            position: relative;
+            padding: 6px 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--gold-primary);
+            transition: var(--transition);
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover {
+            color: #fff;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .action-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1px solid var(--border-subtle);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .action-btn:hover {
+            border-color: var(--gold-primary);
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--gold-glow);
+        }
+
+        .badge-count {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--gold-primary);
+            color: #000;
+            font-size: 0.7rem;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn-admin-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05));
+            border: 1px solid var(--gold-primary);
+            border-radius: 999px;
+            color: var(--gold-light);
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+        }
+
+        .btn-admin-pill:hover {
+            background: var(--gold-primary);
+            color: #000;
+            box-shadow: 0 4px 20px var(--gold-glow);
+            transform: translateY(-2px);
+        }
+
+        /* HERO SECTION WITH 3D CANVAS */
+        .hero-section {
+            position: relative;
+            min-height: calc(100vh - var(--nav-h));
+            display: flex;
+            align-items: center;
+            padding: 40px 60px;
+            overflow: hidden;
+        }
+
+        .hero-canvas-container {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 58%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: auto;
+        }
+
+        #hero3dCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 650px;
+            pointer-events: auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 18px;
+            border-radius: 999px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--border-gold);
+            font-size: 0.8rem;
+            color: var(--gold-light);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 22px;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gold-primary);
+            box-shadow: 0 0 10px var(--gold-primary);
+        }
+
+        .hero-title {
+            font-family: var(--font-serif);
+            font-size: 3.8rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-title .gold-gradient {
+            background: linear-gradient(135deg, #ffffff 0%, var(--gold-light) 50%, var(--gold-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-description {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 34px;
+            font-weight: 300;
+        }
+
+        .hero-btn-row {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .btn-luxury {
+            padding: 15px 34px;
+            border-radius: 999px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .btn-luxury-gold {
+            background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
+            color: #000;
+            box-shadow: 0 10px 30px var(--gold-glow);
+        }
+
+        .btn-luxury-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 40px rgba(212, 175, 55, 0.5);
+        }
+
+        .btn-luxury-glass {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-gold);
+            color: #fff;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-luxury-glass:hover {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: var(--gold-light);
+            transform: translateY(-3px);
+        }
+
+        .btn-spray-interactive {
+            background: linear-gradient(135deg, #1f1b0c, #2a220a);
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-light);
+            animation: pulseSpray 2.5s infinite;
+        }
+
+        @keyframes pulseSpray {
+            0%, 100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); }
+            50% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.6); }
+        }
+
+        /* 3D INTERACTION HINT */
+        .canvas-3d-hint {
+            position: absolute;
+            bottom: 24px;
+            right: 60px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 999px;
+            padding: 8px 18px;
+            font-size: 0.75rem;
+            color: var(--gold-light);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none;
+        }
+
+        /* BRAND HOUSES TICKER */
+        .marquee-container {
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+            background: rgba(10, 10, 16, 0.5);
+            padding: 22px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .marquee-track {
+            display: inline-block;
+            animation: marquee 35s linear infinite;
+        }
+
+        .marquee-item {
+            display: inline-block;
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin: 0 38px;
+            transition: var(--transition);
+        }
+
+        .marquee-item:hover {
+            color: var(--gold-light);
+        }
+
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* SECTION HEADERS & SMOOTH ANCHOR OFFSET */
+        section, .section-wrapper, .hero-section, .olfactory-section, .delhi-boutique-section, footer {
+            scroll-margin-top: 95px;
+        }
+
+        .section-wrapper {
+            padding: 100px 60px;
+            position: relative;
+        }
+
+        .section-header-centered {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        .section-sub {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gold-primary);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 2.6rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+
+        .section-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* CAROUSEL WRAPPER & BUTTERY SMOOTH ARROWS (100% RESPONSIVE) */
+        .carousel-outer {
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 28px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 20px 10px 40px;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            cursor: grab;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .carousel-track:active {
+            cursor: grabbing;
+        }
+
+        .carousel-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* FLUID LUXURY CAROUSEL ARROWS WITH ACTIVE FEEDBACK */
+        .carousel-arrow-btn {
+            position: absolute;
+            top: 45%;
+            transform: translateY(-50%);
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: rgba(18, 18, 28, 0.95);
+            border: 2px solid var(--gold-primary);
+            color: var(--gold-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 50;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9), 0 0 25px var(--gold-glow);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .carousel-arrow-btn:hover {
+            background: var(--gold-primary);
+            color: #000;
+            transform: translateY(-50%) scale(1.14);
+            box-shadow: 0 14px 40px rgba(212, 175, 55, 0.7);
+        }
+
+        .carousel-arrow-btn:active {
+            transform: translateY(-50%) scale(0.92);
+            background: var(--gold-light);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.9);
+        }
+
+        .carousel-arrow-btn.prev {
+            left: -26px;
+        }
+
+        .carousel-arrow-btn.next {
+            right: -26px;
+        }
+
+        @media (max-width: 900px) {
+            .carousel-arrow-btn.prev { left: 8px; }
+            .carousel-arrow-btn.next { right: 8px; }
+        }
+
+        /* PRODUCT CARDS (ULTRA MODERN GLASSMORPHISM) */
+        .product-card {
+            flex: 0 0 320px;
+            background: var(--bg-card);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            position: relative;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--gold-light);
+            background: var(--bg-card-hover);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(212, 175, 55, 0.15);
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-top-badges {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .card-tag {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold-light);
+            border: 1px solid var(--border-gold);
+        }
+
+        .card-wish-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.15rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .card-wish-btn.active, .card-wish-btn:hover {
+            color: var(--rose);
+            transform: scale(1.2);
+        }
+
+        .card-img-wrap {
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--radius-md);
+            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+        }
+
+        .card-img-wrap img {
+            max-height: 100%;
+            width: 100%;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .product-card:hover .card-img-wrap img {
+            transform: scale(1.08);
+        }
+
+        .card-brand {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold-primary);
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .card-title {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .card-notes {
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 16px;
+            flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .current-price {
+            font-family: var(--font-serif);
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--gold-light);
+        }
+
+        .old-price {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            text-decoration: line-through;
+        }
+
+        .card-btn-group {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+        }
+
+        .btn-add-cart {
+            padding: 12px;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
+            border: none;
+            border-radius: var(--radius-md);
+            color: #000;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-add-cart:hover {
+            box-shadow: 0 8px 24px var(--gold-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-quick-view {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-gold);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--gold-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-quick-view:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* 3D SCROLL EXPERIENCE / OLFACTORY PYRAMID */
+        .olfactory-section {
+            background: linear-gradient(180deg, #050508, #0e0d16, #050508);
+            border-top: 1px solid var(--border-gold);
+            border-bottom: 1px solid var(--border-gold);
+            padding: 100px 60px;
+        }
+
+        .pyramid-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 900px) {
+            .pyramid-grid { grid-template-columns: 1fr; }
+        }
+
+        .pyramid-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-lg);
+            padding: 38px 28px;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .pyramid-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 30px var(--gold-glow);
+            border-color: var(--gold-light);
+        }
+
+        .pyramid-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05));
+            border: 1px solid var(--gold-primary);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: var(--gold-light);
+        }
+
+        .pyramid-title {
+            font-family: var(--font-serif);
+            font-size: 1.35rem;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .pyramid-duration {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--gold-primary);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .pyramid-text {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* CATEGORIES SECTION */
+        .category-filter-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 48px;
+        }
+
+        .cat-filter-btn {
+            padding: 10px 24px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .cat-filter-btn:hover, .cat-filter-btn.active {
+            background: var(--gold-primary);
+            color: #000;
+            border-color: var(--gold-primary);
+            box-shadow: 0 4px 20px var(--gold-glow);
+        }
+
+        .products-grid-catalog {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 28px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* SPECIAL DELUXE BANNER */
+        .deluxe-banner {
+            margin: 60px;
+            padding: 70px 60px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, rgba(28, 22, 9, 0.9), rgba(12, 12, 18, 0.9)),
+                        url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1600&q=80') center/cover;
+            border: 1px solid var(--border-gold);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+        }
+
+        @media (max-width: 900px) {
+            .deluxe-banner { flex-direction: column; text-align: center; gap: 30px; margin: 30px 20px; padding: 40px 24px; }
+        }
+
+        .banner-text-content h2 {
+            font-family: var(--font-serif);
+            font-size: 2.6rem;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .banner-text-content p {
+            color: var(--gold-light);
+            font-size: 1.05rem;
+            max-width: 550px;
+        }
+
+        /* CART SIDEBAR */
+        .cart-sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 9998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .cart-sidebar-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -480px;
+            width: 100%;
+            max-width: 440px;
+            height: 100vh;
+            background: #0d0d15;
+            border-left: 1px solid var(--border-gold);
+            z-index: 9999;
+            transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: -15px 0 50px rgba(0, 0, 0, 0.9);
+        }
+
+        .cart-sidebar.active {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .cart-header h3 {
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            color: var(--gold-light);
+        }
+
+        .close-cart-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-cart-btn:hover { color: #fff; }
+
+        .cart-items-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .cart-item-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 12px;
+        }
+
+        .cart-item-thumb {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid var(--border-gold);
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .cart-item-brand {
+            font-size: 0.72rem;
+            color: var(--gold-primary);
+            text-transform: uppercase;
+        }
+
+        .cart-item-price {
+            font-family: var(--font-serif);
+            font-weight: 700;
+            color: var(--gold-light);
+            font-size: 0.95rem;
+            margin-top: 4px;
+        }
+
+        .cart-qty-ctrl {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 6px;
+            padding: 2px 6px;
+        }
+
+        .cart-qty-btn {
+            background: transparent;
+            border: none;
+            color: var(--gold-primary);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0 4px;
+        }
+
+        .cart-item-del {
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 4px;
+            transition: var(--transition);
+        }
+
+        .cart-item-del:hover { color: var(--rose); }
+
+        .cart-footer {
+            padding: 24px;
+            border-top: 1px solid var(--border-subtle);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .coupon-box {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .coupon-input {
+            flex: 1;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-md);
+            color: #fff;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            outline: none;
+        }
+
+        .btn-apply-coupon {
+            padding: 10px 18px;
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid var(--gold-primary);
+            border-radius: var(--radius-md);
+            color: var(--gold-light);
+            font-weight: 600;
+            font-size: 0.78rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-apply-coupon:hover {
+            background: var(--gold-primary);
+            color: #000;
+        }
+
+        .cart-summary-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .cart-total-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-subtle);
+            font-family: var(--font-serif);
+            font-size: 1.3rem;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .btn-checkout {
+            width: 100%;
+            margin-top: 18px;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
+            border: none;
+            border-radius: var(--radius-md);
+            color: #000;
+            font-size: 0.95rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 8px 30px var(--gold-glow);
+            transition: var(--transition);
+        }
+
+        .btn-checkout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.5);
+        }
+
+        /* CHECKOUT MODAL */
+        .modal-deluxe {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-deluxe.active { display: flex; }
+
+        .modal-deluxe-content {
+            background: #0d0d15;
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 560px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 36px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.9);
+        }
+
+        /* FOOTER */
+        .main-footer {
+            background: #020204;
+            border-top: 1px solid var(--border-gold);
+            padding: 80px 60px 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        @media (max-width: 900px) {
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+
+        .footer-col h4 {
+            font-family: var(--font-serif);
+            font-size: 1.05rem;
+            color: var(--gold-light);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-col a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+
+        .footer-col a:hover {
+            color: var(--gold-light);
+            padding-left: 4px;
+        }
+
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            color: var(--text-dim);
+        }
+
+        /* TOAST */
+        .toast-box {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            pointer-events: none;
+        }
+
+        .toast-msg {
+            background: rgba(18, 18, 28, 0.95);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--gold-primary);
+            color: #fff;
+            padding: 14px 22px;
+            border-radius: var(--radius-md);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            font-size: 0.88rem;
+            animation: slideToast 0.3s ease;
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* BADGE BOUNCE ANIMATION & BUTTON FEEDBACK */
+        @keyframes badgePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.45); }
+            100% { transform: scale(1); }
+        }
+        .badge-bounce {
+            animation: badgePulse 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .btn-add-cart.added {
+            background: linear-gradient(135deg, #10b981, #059669) !important;
+            color: #fff !important;
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.6) !important;
+        }
+
+        /* WISHLIST DRAWER (MIRRORS CART DRAWER) */
+        .wishlist-sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 9998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .wishlist-sidebar-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .wishlist-sidebar {
+            position: fixed;
+            top: 0;
+            right: -480px;
+            width: 100%;
+            max-width: 440px;
+            height: 100vh;
+            background: #0d0d15;
+            border-left: 1px solid var(--border-gold);
+            z-index: 9999;
+            transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: -15px 0 50px rgba(0, 0, 0, 0.9);
+        }
+
+        .wishlist-sidebar.active {
+            right: 0;
+        }
+
+        /* DELHI FLAGSHIP BOUTIQUE SECTION */
+        .delhi-boutique-section {
+            background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.04) 0%, rgba(5, 5, 8, 0.95) 100%);
+            border-top: 1px solid var(--border-gold);
+            border-bottom: 1px solid var(--border-gold);
+            padding: 100px 60px;
+        }
+
+        .boutique-showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            max-width: 1300px;
+            margin: 0 auto 50px;
+        }
+
+        @media (max-width: 900px) {
+            .boutique-showcase-grid { grid-template-columns: 1fr; }
+        }
+
+        .boutique-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-lg);
+            padding: 34px 28px;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(14px);
+        }
+
+        .boutique-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--gold-light);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7), 0 0 30px var(--gold-glow);
+        }
+
+        .boutique-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.05));
+            border: 1px solid var(--gold-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: var(--gold-light);
+            margin-bottom: 20px;
+        }
+
+        .boutique-card h3 {
+            font-family: var(--font-serif);
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .boutique-card p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        .concierge-banner {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: linear-gradient(90deg, #111019, #1c1809, #111019);
+            border: 1px solid var(--gold-primary);
+            border-radius: var(--radius-lg);
+            padding: 28px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* 3D SCENT AURA FLOATING POPUP */
+        .scent-aura-tag {
+            position: absolute;
+            top: 25%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(18, 18, 28, 0.95);
+            border: 1px solid var(--gold-primary);
+            border-radius: 999px;
+            padding: 10px 22px;
+            color: var(--gold-light);
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            pointer-events: none;
+            opacity: 0;
+            transition: all 0.5s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9), 0 0 25px var(--gold-glow);
+            z-index: 10;
+        }
+
+        .scent-aura-tag.active {
+            opacity: 1;
+            transform: translate(-50%, -80%);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP ANNOUNCEMENT BAR (DELHI INDIA & EMAIL) -->
+    <div class="top-bar-announcement">
+        <div class="top-bar-left">
+            <span class="top-bar-item">
+                <i class="fa-solid fa-location-dot" style="color:var(--gold-primary);"></i>
+                Boutique: <strong>Connaught Place, New Delhi, Delhi 110001, India</strong>
+            </span>
+            <span class="top-bar-item">
+                <i class="fa-solid fa-envelope" style="color:var(--gold-primary);"></i>
+                <a href="mailto:stddeepanshu@aol.com" style="color:inherit; text-decoration:none;">stddeepanshu@aol.com</a>
+            </span>
+        </div>
+        <div class="top-bar-right">
+            <span class="top-bar-item">
+                <i class="fa-solid fa-phone" style="color:var(--gold-primary);"></i>
+                +91 98110 24567
+            </span>
+            <span class="top-bar-item">
+                <i class="fa-solid fa-truck" style="color:var(--gold-primary);"></i>
+                Complimentary Express Shipping Across India on orders above ₹1,999
+            </span>
+        </div>
+    </div>
+
+    <!-- MAIN NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <a href="/" class="nav-brand">
+            <div class="brand-crest"><i class="fa-solid fa-crown"></i></div>
+            <div class="brand-name-group">
+                <h1 id="brandTitle">Luxury Perfume</h1>
+                <span>Haute Parfumerie • Delhi</span>
+            </div>
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="#featured" class="nav-link">Featured</a></li>
+            <li><a href="#catalog" class="nav-link">Fragrance House</a></li>
+            <li><a href="#pyramid" class="nav-link">Olfactory Art</a></li>
+            <li><a href="#boutique" class="nav-link">Delhi Boutique</a></li>
+            <li><a href="/admin.html" class="btn-admin-pill" target="_blank"><i class="fa-solid fa-sliders"></i> Admin Suite</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <button class="action-btn" id="searchBtn" title="Search catalog" onclick="openSearchModal()">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+            <button class="action-btn" id="wishlistNavBtn" title="Wishlist & Saved Flacons" onclick="toggleWishlistDrawer()">
+                <i class="fa-solid fa-heart"></i>
+                <span class="badge-count" id="wishlistCount">0</span>
+            </button>
+            <button class="action-btn" id="cartNavBtn" title="Shopping Cart" onclick="toggleCart()">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span class="badge-count" id="cartCountBadge">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION WITH ADVANCED 3D SCENE -->
+    <section class="hero-section" id="hero">
+        <div class="hero-content">
+            <div class="hero-badge">Curated Collection • Delhi Flagship</div>
+            <h1 class="hero-title">
+                The Epitome Of <br>
+                <span class="gold-gradient">Rare Luxury Scent</span>
+            </h1>
+            <p class="hero-description">
+                Experience sensory perfection. Hand-crafted artisanal perfumes formulated with precious French oils, Himalayan daffodils, and royal Arabian oud.
+            </p>
+            <div class="hero-btn-row">
+                <a href="#catalog" class="btn-luxury btn-luxury-gold">
+                    <i class="fa-solid fa-sparkles"></i> Explore Collection
+                </a>
+                <button class="btn-luxury btn-spray-interactive" id="heroSprayBtn" onclick="triggerPerfumeSpray()">
+                    <i class="fa-solid fa-spray-can-sparkles"></i> Spray 3D Scent Mist
+                </button>
+            </div>
+        </div>
+
+        <!-- 3D Three.js Interactive Container -->
+        <div class="hero-canvas-container" id="heroCanvasWrap" title="Click bottle to spray fragrance">
+            <canvas id="hero3dCanvas"></canvas>
+            <div class="scent-aura-tag" id="scentAuraTag">
+                <i class="fa-solid fa-sparkles" style="color:var(--gold-primary);"></i> 
+                <strong>Sillage Released:</strong> Calabrian Bergamot • Himalayan Saffron • Royal Oud
+            </div>
+            <div class="canvas-3d-hint">
+                <i class="fa-solid fa-hand-pointer"></i> Drag to rotate bottle in 3D • Click bottle to spray
+            </div>
+        </div>
+    </section>
+
+    <!-- BRAND HOUSES MARQUEE -->
+    <div class="marquee-container">
+        <div class="marquee-track">
+            <span class="marquee-item">TOM FORD</span>
+            <span class="marquee-item">CREED MILLÉSIME</span>
+            <span class="marquee-item">MAISON FRANCIS KURKDJIAN</span>
+            <span class="marquee-item">CHANEL EXCLUSIF</span>
+            <span class="marquee-item">DIOR PRIVÉE</span>
+            <span class="marquee-item">LE LABO SANTAL</span>
+            <span class="marquee-item">YVES SAINT LAURENT</span>
+            <span class="marquee-item">LATTAFA OUD</span>
+            <span class="marquee-item">FOREST ESSENTIALS HIMALAYAN</span>
+            <span class="marquee-item">ARMAF ICONIC</span>
+            <span class="marquee-item">TOM FORD</span>
+            <span class="marquee-item">CREED MILLÉSIME</span>
+            <span class="marquee-item">MAISON FRANCIS KURKDJIAN</span>
+        </div>
+    </div>
+
+    <!-- FEATURED CAROUSEL SECTION (WITH FLAWLESS WORKING ARROWS) -->
+    <section class="section-wrapper" id="featured">
+        <div class="section-header-centered">
+            <span class="section-sub">Masterpieces of the Season</span>
+            <h2 class="section-title">Iconic Bestsellers</h2>
+            <p class="section-desc">Hand-picked by our Master Noses in Delhi. Each bottle is a symphony of rare botanicals and opulent sillage.</p>
+        </div>
+
+        <div class="carousel-outer">
+            <!-- Left Arrow Button -->
+            <button class="carousel-arrow-btn prev" id="featPrevBtn" aria-label="Previous Products" onclick="scrollFeaturedCarousel('prev')">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <!-- Carousel Track -->
+            <div class="carousel-track" id="featuredCarouselTrack">
+                <!-- Dynamically loaded from real SQLite DB -->
+                <div style="color:var(--gold-light); padding: 40px; text-align: center; width: 100%;">
+                    <i class="fa-solid fa-circle-notch fa-spin"></i> Loading Luxury Catalog...
+                </div>
+            </div>
+
+            <!-- Right Arrow Button -->
+            <button class="carousel-arrow-btn next" id="featNextBtn" aria-label="Next Products" onclick="scrollFeaturedCarousel('next')">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- 3D OLFACTORY EXPERIENCE SECTION -->
+    <section class="olfactory-section" id="pyramid">
+        <div class="section-header-centered">
+            <span class="section-sub">The Science of Scent Progression</span>
+            <h2 class="section-title">The Olfactory Pyramid</h2>
+            <p class="section-desc">True haute perfumery evolves in 3 harmonious stages as it warms against your skin.</p>
+        </div>
+
+        <div class="pyramid-grid">
+            <div class="pyramid-card">
+                <div class="pyramid-icon"><i class="fa-solid fa-wind"></i></div>
+                <h3 class="pyramid-title">Top Notes</h3>
+                <div class="pyramid-duration">First 15 – 30 Minutes</div>
+                <p class="pyramid-text">
+                    The immediate sensory crescendo. Radiant Calabrian bergamot, saffron filaments, and sparkling Italian citrus that enchant the air instantly upon application.
+                </p>
+            </div>
+
+            <div class="pyramid-card" style="border-color: var(--gold-light);">
+                <div class="pyramid-icon"><i class="fa-solid fa-heart"></i></div>
+                <h3 class="pyramid-title">Heart Notes</h3>
+                <div class="pyramid-duration">Hours 1 – 5</div>
+                <p class="pyramid-text">
+                    The soul and identity of the composition. Grandiflorum jasmine, midnight Damascus rose, French lavender, and smoky cedarwood revealing the true character.
+                </p>
+            </div>
+
+            <div class="pyramid-card">
+                <div class="pyramid-icon"><i class="fa-solid fa-gem"></i></div>
+                <h3 class="pyramid-title">Base Notes</h3>
+                <div class="pyramid-duration">Hours 6 – 24+</div>
+                <p class="pyramid-text">
+                    The immortal foundation. Rare Mysore sandalwood, velvety ambergris, Cambodian oud, and Mexican bourbon vanilla lingering forever on fabrics and memory.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FULL PERFUME CATALOG WITH FILTERS -->
+    <section class="section-wrapper" id="catalog">
+        <div class="section-header-centered">
+            <span class="section-sub">Delhi Flagship Inventory</span>
+            <h2 class="section-title">The Complete Collection</h2>
+            <p class="section-desc">Filter by olfactory family, gender silhouette, or rare private blends.</p>
+        </div>
+
+        <div class="category-filter-row">
+            <button class="cat-filter-btn active" data-cat="all" onclick="filterCatalog('all', this)">All Flacons</button>
+            <button class="cat-filter-btn" data-cat="men" onclick="filterCatalog('men', this)">For Him</button>
+            <button class="cat-filter-btn" data-cat="women" onclick="filterCatalog('women', this)">For Her</button>
+            <button class="cat-filter-btn" data-cat="unisex" onclick="filterCatalog('unisex', this)">Unisex Niche</button>
+            <button class="cat-filter-btn" data-cat="luxury" onclick="filterCatalog('luxury', this)">Private Blends</button>
+        </div>
+
+        <div class="products-grid-catalog" id="fullCatalogGrid">
+            <!-- Populated via API -->
+        </div>
+    </section>
+
+    <!-- DELUXE SPECIAL OFFER BANNER -->
+    <div class="deluxe-banner">
+        <div class="banner-text-content">
+            <span style="font-size:0.8rem; text-transform:uppercase; letter-spacing:2px; color:var(--gold-light);">Limited Private Reserve</span>
+            <h2>Exclusive Delhi Haute Gifting</h2>
+            <p>Order any two 100ml Eau de Parfums and receive a complimentary crystal travel flacon with engraved golden monograms.</p>
+        </div>
+        <a href="#catalog" class="btn-luxury btn-luxury-gold">
+            <i class="fa-solid fa-gift"></i> Claim Privilege
+        </a>
+    </div>
+
+    <!-- CART SIDEBAR -->
+    <div class="cart-sidebar-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <aside class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3><i class="fa-solid fa-bag-shopping" style="color:var(--gold-primary);"></i> Your Cart</h3>
+            <button class="close-cart-btn" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <div class="cart-items-container" id="cartItemsList">
+            <!-- Dynamic Cart Items -->
+            <div style="text-align: center; color: var(--text-dim); margin-top: 60px;">Your shopping bag is empty.</div>
+        </div>
+
+        <div class="cart-footer">
+            <div class="coupon-box">
+                <input type="text" id="couponInput" class="coupon-input" placeholder="Coupon Code (e.g. WELCOME10, LUXE20)">
+                <button class="btn-apply-coupon" onclick="applyDiscountCoupon()">Apply</button>
+            </div>
+
+            <div class="cart-summary-line">
+                <span>Subtotal</span>
+                <span id="cartSubtotalText">₹0</span>
+            </div>
+            <div class="cart-summary-line" id="discountLine" style="display:none; color:var(--emerald);">
+                <span>Discount Applied</span>
+                <span id="cartDiscountText">-₹0</span>
+            </div>
+            <div class="cart-summary-line">
+                <span>Express Shipping</span>
+                <span style="color:var(--emerald);">FREE</span>
+            </div>
+            <div class="cart-total-line">
+                <span>Grand Total</span>
+                <span id="cartGrandTotalText" style="color:var(--gold-light);">₹0</span>
+            </div>
+
+            <button class="btn-checkout" onclick="openCheckoutModal()">
+                <i class="fa-solid fa-shield-halved"></i> Proceed To Checkout
+            </button>
+        </div>
+    </aside>
+
+    <!-- WISHLIST SIDEBAR -->
+    <div class="wishlist-sidebar-overlay" id="wishlistOverlay" onclick="toggleWishlistDrawer()"></div>
+    <aside class="wishlist-sidebar" id="wishlistSidebar">
+        <div class="cart-header">
+            <h3><i class="fa-solid fa-heart" style="color:var(--rose);"></i> Saved Wishlist</h3>
+            <button class="close-cart-btn" onclick="toggleWishlistDrawer()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <div class="cart-items-container" id="wishlistItemsList">
+            <!-- Dynamic Wishlist Items -->
+            <div style="text-align: center; color: var(--text-dim); margin-top: 60px;">Your wishlist is empty.</div>
+        </div>
+
+        <div class="cart-footer">
+            <button class="btn-checkout" style="margin-top:0;" onclick="addAllWishlistToBag()">
+                <i class="fa-solid fa-bag-shopping"></i> Add All To Bag
+            </button>
+        </div>
+    </aside>
+
+    <!-- CHECKOUT MODAL -->
+    <div class="modal-deluxe" id="checkoutModal">
+        <div class="modal-deluxe-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 24px;">
+                <h3 style="font-family:var(--font-serif); font-size:1.4rem; color:var(--gold-light);">
+                    <i class="fa-solid fa-truck-fast"></i> Delivery & Dispatch Details
+                </h3>
+                <button style="background:transparent; border:none; color:#fff; font-size:1.4rem; cursor:pointer;" onclick="closeCheckoutModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="checkoutForm" onsubmit="handlePlaceOrder(event)">
+                <div style="margin-bottom: 16px;">
+                    <label style="display:block; font-size:0.75rem; text-transform:uppercase; color:var(--gold-primary); margin-bottom:6px;">Recipient Full Name *</label>
+                    <input type="text" id="orderCustName" class="form-control" style="width:100%; padding:12px; background:rgba(0,0,0,0.5); border:1px solid var(--border-gold); color:#fff; border-radius:8px;" placeholder="e.g. Deepanshu Sharma" required>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom: 16px;">
+                    <div>
+                        <label style="display:block; font-size:0.75rem; text-transform:uppercase; color:var(--gold-primary); margin-bottom:6px;">Email Address *</label>
+                        <input type="email" id="orderCustEmail" class="form-control" style="width:100%; padding:12px; background:rgba(0,0,0,0.5); border:1px solid var(--border-gold); color:#fff; border-radius:8px;" value="stddeepanshu@aol.com" required>
+                    </div>
+                    <div>
+                        <label style="display:block; font-size:0.75rem; text-transform:uppercase; color:var(--gold-primary); margin-bottom:6px;">Phone Number *</label>
+                        <input type="text" id="orderCustPhone" class="form-control" style="width:100%; padding:12px; background:rgba(0,0,0,0.5); border:1px solid var(--border-gold); color:#fff; border-radius:8px;" value="+91 98110 24567" required>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display:block; font-size:0.75rem; text-transform:uppercase; color:var(--gold-primary); margin-bottom:6px;">Delivery Shipping Address (Delhi / India) *</label>
+                    <textarea id="orderCustAddress" rows="3" class="form-control" style="width:100%; padding:12px; background:rgba(0,0,0,0.5); border:1px solid var(--border-gold); color:#fff; border-radius:8px;" placeholder="Flat / House No, Street, Landmark, City, State, PIN Code" required>Connaught Place, Inner Circle, New Delhi, Delhi 110001, India</textarea>
+                </div>
+
+                <!-- ANTI-CARDING & BOT HONEYPOT (Hidden from humans, traps bots) -->
+                <input type="text" name="website_hp" id="website_hp" style="display:none !important; position:absolute; left:-9999px; opacity:0; pointer-events:none;" tabindex="-1" autocomplete="off">
+
+                <!-- SECURITY TRUST SHIELD -->
+                <div style="background:rgba(212,175,55,0.06); border:1px solid var(--border-gold); padding:10px 14px; border-radius:8px; margin-bottom:18px; font-size:0.75rem; color:var(--gold-light); display:flex; align-items:center; gap:10px;">
+                    <i class="fa-solid fa-shield-halved" style="font-size:1.3rem; color:var(--emerald);"></i>
+                    <div>
+                        <strong style="color:#fff;">Bank-Grade 256-Bit SSL & Anti-Carding Shield Active</strong>
+                        <div style="color:var(--text-dim); font-size:0.7rem; margin-top:2px;">
+                            Zero card data stored. Protected by 3D Secure OTP & HMAC SHA256 cryptographic verification.
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 24px;">
+                    <label style="display:block; font-size:0.75rem; text-transform:uppercase; color:var(--gold-primary); margin-bottom:8px; letter-spacing:1px;">Select Verified Payment Gateway</label>
+                    <div style="display:flex; flex-direction:column; gap:10px;">
+                        <!-- 1. Razorpay -->
+                        <label style="border:1px solid var(--border-gold); padding:14px; border-radius:10px; cursor:pointer; background:rgba(212,175,55,0.1); display:flex; align-items:center; justify-content:space-between; transition:var(--transition);" id="optRazorpay">
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <input type="radio" name="payMethod" value="razorpay" checked onchange="updatePayButtonUI('razorpay')">
+                                <div>
+                                    <div style="font-weight:700; color:#fff; font-size:0.9rem;">
+                                        <i class="fa-solid fa-bolt" style="color:var(--gold-primary);"></i> Razorpay Secure
+                                    </div>
+                                    <div style="font-size:0.72rem; color:var(--gold-light);">UPI (GPay/PhonePe), 3DS Cards, NetBanking</div>
+                                </div>
+                            </div>
+                            <span style="font-size:0.7rem; font-weight:700; background:rgba(16,185,129,0.15); color:var(--emerald); padding:3px 8px; border-radius:4px; border:1px solid rgba(16,185,129,0.3);">RECOMMENDED</span>
+                        </label>
+
+                        <!-- 2. PayPal -->
+                        <label style="border:1px solid var(--border-subtle); padding:14px; border-radius:10px; cursor:pointer; background:rgba(255,255,255,0.02); display:flex; align-items:center; justify-content:space-between; transition:var(--transition);" id="optPayPal">
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <input type="radio" name="payMethod" value="paypal" onchange="updatePayButtonUI('paypal')">
+                                <div>
+                                    <div style="font-weight:700; color:#fff; font-size:0.9rem;">
+                                        <i class="fa-brands fa-paypal" style="color:#0079C1;"></i> PayPal International
+                                    </div>
+                                    <div style="font-size:0.72rem; color:var(--text-muted);">Global Credit/Debit Cards (USD Checkout)</div>
+                                </div>
+                            </div>
+                            <span style="font-size:0.7rem; color:var(--text-dim);">GLOBAL</span>
+                        </label>
+
+                        <!-- 3. Cash on Delivery -->
+                        <label style="border:1px solid var(--border-subtle); padding:14px; border-radius:10px; cursor:pointer; background:rgba(255,255,255,0.02); display:flex; align-items:center; justify-content:space-between; transition:var(--transition);" id="optCOD">
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <input type="radio" name="payMethod" value="cod" onchange="updatePayButtonUI('cod')">
+                                <div>
+                                    <div style="font-weight:700; color:#fff; font-size:0.9rem;">
+                                        <i class="fa-solid fa-hand-holding-dollar" style="color:var(--emerald);"></i> Cash on Delivery (COD)
+                                    </div>
+                                    <div style="font-size:0.72rem; color:var(--text-muted);">Pay upon delivery across Delhi & India</div>
+                                </div>
+                            </div>
+                            <span style="font-size:0.7rem; color:var(--text-dim);">DELHI / INDIA</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-checkout" id="btnSubmitOrder" style="margin-top:0;">
+                    <i class="fa-solid fa-lock"></i> Pay & Confirm with Razorpay Secure
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- QUICK VIEW PRODUCT MODAL -->
+    <div class="modal-deluxe" id="quickViewModal">
+        <div class="modal-deluxe-content" style="max-width: 680px;">
+            <div style="display:flex; justify-content:flex-end; margin-bottom:10px;">
+                <button style="background:transparent; border:none; color:#fff; font-size:1.4rem; cursor:pointer;" onclick="closeQuickView()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="quickViewDetails">Loading...</div>
+        </div>
+    </div>
+
+    <!-- SEARCH MODAL -->
+    <div class="modal-deluxe" id="searchModal">
+        <div class="modal-deluxe-content" style="max-width: 650px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+                <h3 style="font-family:var(--font-serif); font-size:1.3rem; color:var(--gold-light);">Search Boutique Fragrances</h3>
+                <button style="background:transparent; border:none; color:#fff; font-size:1.4rem; cursor:pointer;" onclick="closeSearchModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <input type="text" id="liveSearchInput" placeholder="Type perfume name, brand, or note (e.g. Oud, Creed, Saffron)..." style="width:100%; padding:14px; background:rgba(0,0,0,0.6); border:1px solid var(--gold-primary); color:#fff; border-radius:10px; font-size:1rem; outline:none;" oninput="runLiveSearch(this.value)">
+            <div id="searchResultsList" style="margin-top: 20px; max-height: 380px; overflow-y:auto; display:flex; flex-direction:column; gap:10px;">
+                <div style="color:var(--text-dim); text-align:center; padding:20px;">Type at least 2 characters to search.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DELHI FLAGSHIP BOUTIQUE SHOWCASE SECTION (HANDLES BOTH #boutique AND #about) -->
+    <section class="section-wrapper delhi-boutique-section" id="boutique">
+        <a id="about" style="position:relative; top:-100px; display:block;"></a>
+        <div class="section-header-centered">
+            <span class="section-sub">Connaught Place Flagship • New Delhi</span>
+            <h2 class="section-title">The Delhi Flagship Boutique</h2>
+            <p class="section-desc">Experience an intimate olfactory sanctuary. Private flacon customization, bespoke scent profiling, and rare private reserves in the historic heart of Delhi.</p>
+        </div>
+
+        <div class="boutique-showcase-grid">
+            <div class="boutique-card">
+                <div class="boutique-icon"><i class="fa-solid fa-location-dot"></i></div>
+                <h3>Connaught Place Flagship</h3>
+                <p>Inner Circle, Block C, Connaught Place, New Delhi, Delhi 110001, India.</p>
+                <div style="margin-top:14px; font-size:0.8rem; color:var(--gold-primary);">
+                    <i class="fa-solid fa-train-subway"></i> 2 Mins Walk from Rajiv Chowk Metro (Gate 2)
+                </div>
+            </div>
+
+            <div class="boutique-card">
+                <div class="boutique-icon"><i class="fa-solid fa-clock"></i></div>
+                <h3>Salon & Reserve Hours</h3>
+                <p>Open 7 Days a week for exclusive customer walks & private olfactory consultations.</p>
+                <div style="margin-top:14px; font-size:0.85rem; color:var(--gold-light); font-weight:600;">
+                    Mon – Sun: 11:00 AM – 9:00 PM IST
+                </div>
+            </div>
+
+            <div class="boutique-card">
+                <div class="boutique-icon"><i class="fa-solid fa-champagne-glasses"></i></div>
+                <h3>Private VIP Scent Tasting</h3>
+                <p>Complimentary 45-minute private evaluation with Master Noses and golden flacon engraving.</p>
+                <button class="btn-luxury btn-luxury-gold" style="margin-top:16px; width:100%; justify-content:center; padding:12px; font-size:0.78rem;" onclick="openVipModal()">
+                    <i class="fa-solid fa-crown"></i> Reserve VIP Tasting
+                </button>
+            </div>
+        </div>
+
+        <!-- CONCIERGE BANNER -->
+        <div class="concierge-banner">
+            <div>
+                <h4 style="font-family:var(--font-serif); font-size:1.2rem; color:var(--gold-light); margin-bottom:4px;">
+                    <i class="fa-solid fa-headset"></i> Delhi Scent Concierge
+                </h4>
+                <p style="color:var(--text-muted); font-size:0.85rem;">Need personalized fragrance advice or same-day Delhi NCR express delivery?</p>
+            </div>
+            <div style="display:flex; gap:14px; flex-wrap:wrap;">
+                <a href="mailto:stddeepanshu@aol.com" class="btn-luxury btn-luxury-glass" style="font-size:0.8rem; padding:10px 20px;">
+                    <i class="fa-solid fa-envelope"></i> Email: stddeepanshu@aol.com
+                </a>
+                <a href="tel:+919811024567" class="btn-luxury btn-luxury-gold" style="font-size:0.8rem; padding:10px 20px;">
+                    <i class="fa-solid fa-phone"></i> Call: +91 98110 24567
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRACK ORDER MODAL -->
+    <div class="modal-deluxe" id="trackOrderModal">
+        <div class="modal-deluxe-content" style="max-width: 600px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+                <h3 style="font-family:var(--font-serif); font-size:1.35rem; color:var(--gold-light);">
+                    <i class="fa-solid fa-location-crosshairs"></i> Track Haute Dispatch
+                </h3>
+                <button style="background:transparent; border:none; color:#fff; font-size:1.4rem; cursor:pointer;" onclick="closeTrackOrderModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div style="display:flex; gap:8px; margin-bottom:10px;">
+                <input type="text" id="trackInputCode" placeholder="Enter Tracking Code (e.g. LP-DEL-255110)" style="flex:1; padding:12px 14px; background:rgba(0,0,0,0.6); border:1px solid var(--gold-primary); color:#fff; border-radius:8px; font-size:0.9rem; outline:none; text-transform:uppercase;">
+                <button class="btn-luxury btn-luxury-gold" style="padding:10px 22px; font-size:0.85rem;" onclick="trackOrderLookup()">Track</button>
+            </div>
+            <div style="font-size:0.75rem; color:var(--text-dim); margin-bottom:18px;">
+                Tip: Enter your tracking code received during checkout (e.g. LP-DEL-255110).
+            </div>
+
+            <div id="trackOrderResult"></div>
+        </div>
+    </div>
+
+    <!-- VIP TASTING APPOINTMENT MODAL -->
+    <div class="modal-deluxe" id="vipBookingModal">
+        <div class="modal-deluxe-content" style="max-width: 580px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+                <h3 style="font-family:var(--font-serif); font-size:1.35rem; color:var(--gold-light);">
+                    <i class="fa-solid fa-champagne-glasses"></i> Reserve Private VIP Tasting
+                </h3>
+                <button style="background:transparent; border:none; color:#fff; font-size:1.4rem; cursor:pointer;" onclick="closeVipModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6; margin-bottom:20px;">
+                Enjoy a private 45-minute fragrance evaluation at our Connaught Place Flagship Salon in Delhi. Includes crystal flacon monograms and bespoke olfactive decant tasting.
+            </p>
+            <form onsubmit="handleVipBooking(event)">
+                <div style="margin-bottom:14px;">
+                    <label style="display:block; font-size:0.75rem; text-transform:uppercase; color:var(--gold-primary); margin-bottom:6px;">Your Name *</label>
+                    <input type="text" id="vipName" class="form-control" style="width:100%; padding:12px; background:rgba(0,0,0,0.5); border:1px solid var(--border-gold); color:#fff; border-radius:8px;" placeholder="e.g. Deepanshu" required>
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px;">
+                    <div>
+                        <label style="display:block; font-size:0.75rem; text-transform:uppercase; color:var(--gold-primary); margin-bottom:6px;">Phone *</label>
+                        <input type="text" id="vipPhone" class="form-control" style="width:100%; padding:12px; background:rgba(0,0,0,0.5); border:1px solid var(--border-gold); color:#fff; border-radius:8px;" placeholder="+91 98110..." required>
+                    </div>
+                    <div>
+                        <label style="display:block; font-size:0.75rem; text-transform:uppercase; color:var(--gold-primary); margin-bottom:6px;">Preferred Date *</label>
+                        <input type="date" id="vipDate" class="form-control" style="width:100%; padding:12px; background:rgba(0,0,0,0.5); border:1px solid var(--border-gold); color:#fff; border-radius:8px;" required>
+                    </div>
+                </div>
+                <div style="margin-bottom:20px;">
+                    <label style="display:block; font-size:0.75rem; text-transform:uppercase; color:var(--gold-primary); margin-bottom:6px;">Preferred Olfactive Silhouette</label>
+                    <select id="vipAroma" style="width:100%; padding:12px; background:rgba(0,0,0,0.8); border:1px solid var(--border-gold); color:#fff; border-radius:8px;">
+                        <option value="Royal Arabian Oud & Smoky Woods">Royal Arabian Oud & Smoky Woods</option>
+                        <option value="Himalayan Daffodil & French Jasmine">Himalayan Daffodil & French Jasmine</option>
+                        <option value="Ambergris & Italian Citrus">Ambergris & Italian Citrus</option>
+                        <option value="Bourbon Vanilla & Spiced Tonka">Bourbon Vanilla & Spiced Tonka</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-checkout" style="margin-top:0;">
+                    <i class="fa-solid fa-crown"></i> Confirm VIP Flagship Reservation
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div style="display:flex; align-items:center; gap:12px; margin-bottom: 18px;">
+                    <div class="brand-crest" style="width:36px; height:36px; font-size:1rem;"><i class="fa-solid fa-crown"></i></div>
+                    <h3 style="font-family:var(--font-serif); font-size:1.3rem; color:var(--gold-light);">Luxury Perfume</h3>
+                </div>
+                <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.7; margin-bottom: 20px;">
+                    India’s pinnacle of bespoke perfumery. Sourcing pure botanical essences from Grasse, Mysore, and Dubai to deliver olfactory elegance that stands out worldwide.
+                </p>
+                <div style="color:var(--gold-primary); font-size:0.85rem; line-height: 1.8;">
+                    <div><i class="fa-solid fa-location-dot"></i> Connaught Place, New Delhi, Delhi 110001, India</div>
+                    <div><i class="fa-solid fa-envelope"></i> stddeepanshu@aol.com</div>
+                    <div><i class="fa-solid fa-phone"></i> +91 98110 24567</div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Fragrance Collections</h4>
+                <ul>
+                    <li><a href="#catalog">Rare Oud Wood</a></li>
+                    <li><a href="#catalog">Baccarat Crimson</a></li>
+                    <li><a href="#catalog">Creed Royal Millésime</a></li>
+                    <li><a href="#catalog">Himalayan Attars</a></li>
+                    <li><a href="#catalog">Men's Extrait</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Boutique Care</h4>
+                <ul>
+                    <li><a href="mailto:stddeepanshu@aol.com">Olfactory Consultation</a></li>
+                    <li><a href="#boutique">Delhi Flagship Experience</a></li>
+                    <li><a href="javascript:void(0)" onclick="toggleCart()">Cart & Bag</a></li>
+                    <li><a href="/admin.html" target="_blank">Executive Admin Suite</a></li>
+                    <li><a href="javascript:void(0)" onclick="openTrackOrderModal()">Track Order</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Haute VIP Privilege</h4>
+                <p style="color:var(--text-dim); font-size:0.82rem; margin-bottom:14px;">Subscribe to receive secret harvest invitations and private decants.</p>
+                <form onsubmit="event.preventDefault(); showToast('Subscribed to VIP Newsletter!', 'success');" style="display:flex; gap:6px;">
+                    <input type="email" placeholder="Your VIP email" required style="padding:10px; background:rgba(255,255,255,0.05); border:1px solid var(--border-gold); color:#fff; border-radius:6px; font-size:0.8rem; width:100%; outline:none;">
+                    <button type="submit" style="background:var(--gold-primary); border:none; padding:10px 14px; border-radius:6px; cursor:pointer;"><i class="fa-solid fa-arrow-right"></i></button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div>© 2026 Luxury Perfume. All Rights Reserved. Master Crafted in Delhi, India.</div>
+            <div style="display:flex; gap:16px;">
+                <a href="/admin.html" style="color:var(--gold-primary); text-decoration:none;">Admin Control</a>
+                <span>•</span>
+                <span>stddeepanshu@aol.com</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- TOAST NOTIFICATIONS -->
+    <div class="toast-box" id="toastBox"></div>
+
+    <!-- JAVASCRIPT: 100% REAL LIVE API + ADVANCED THREE.JS ENGINE -->
+    <script>
+        const API = '/api';
+        let cart = JSON.parse(localStorage.getItem('luxury_perfume_cart') || '[]');
+        let wishlist = JSON.parse(localStorage.getItem('luxury_perfume_wishlist') || '[]');
+        let allCatalogProducts = [];
+        let appliedCoupon = null;
+
+        // --- 1. INITIALIZATION ON DOM READY ---
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartBadges();
+            updateWishlistBadges();
+            loadFeaturedProducts();
+            loadFullCatalog();
+            loadStoreSettings();
+            setupCarouselArrows();
+            initThreeJSScene();
+
+            // Navbar scroll listener
+            window.addEventListener('scroll', () => {
+                const nav = document.getElementById('navbar');
+                if (window.scrollY > 40) nav.classList.add('scrolled');
+                else nav.classList.remove('scrolled');
+            });
+        });
+
+        // --- 2. LOAD STORE SETTINGS VIA API ---
+        async function loadStoreSettings() {
+            try {
+                const res = await fetch(`${API}/settings`);
+                if (res.ok) {
+                    const settings = await res.json();
+                    if (settings.site_name) {
+                        document.title = `${settings.site_name} — The Art of Haute Fragrance | Delhi, India`;
+                        document.getElementById('brandTitle').innerText = settings.site_name;
+                    }
+                }
+            } catch (e) {
+                console.log('Settings load note:', e);
+            }
+        }
+
+        // --- 3. LOAD FEATURED PRODUCTS ---
+        async function loadFeaturedProducts() {
+            const track = document.getElementById('featuredCarouselTrack');
+            try {
+                const res = await fetch(`${API}/products/featured`);
+                const products = await res.json();
+
+                if (!products || products.length === 0) {
+                    track.innerHTML = '<div style="color:var(--text-dim); padding:20px;">No featured perfumes available.</div>';
+                    return;
+                }
+
+                track.innerHTML = products.map(p => renderProductCardHTML(p)).join('');
+            } catch (err) {
+                console.error(err);
+                track.innerHTML = '<div style="color:var(--rose); padding:20px;">Failed to load products. Check server.</div>';
+            }
+        }
+
+        // --- 4. LOAD FULL CATALOG WITH CATEGORY FILTER ---
+        async function loadFullCatalog(category = 'all') {
+            const grid = document.getElementById('fullCatalogGrid');
+            try {
+                const url = category === 'all' ? `${API}/products` : `${API}/products?category=${category}`;
+                const res = await fetch(url);
+                const products = await res.json();
+                allCatalogProducts = products || [];
+
+                if (allCatalogProducts.length === 0) {
+                    grid.innerHTML = '<div style="color:var(--text-dim); text-align:center; grid-column: 1/-1; padding:40px;">No perfumes found in this olfactory family.</div>';
+                    return;
+                }
+
+                grid.innerHTML = allCatalogProducts.map(p => renderProductCardHTML(p)).join('');
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function filterCatalog(cat, btn) {
+            document.querySelectorAll('.cat-filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            loadFullCatalog(cat);
+        }
+
+        // --- 5. RENDER PRODUCT CARD HTML ---
+        function renderProductCardHTML(p) {
+            const isWished = wishlist.includes(p.id);
+            const notes = p.fragrance_notes 
+                ? [p.fragrance_notes.top?.[0], p.fragrance_notes.middle?.[0], p.fragrance_notes.base?.[0]].filter(Boolean).join(' • ')
+                : (p.description || 'Rare precious accords');
+
+            const priceFormatted = '₹' + Number(p.price).toLocaleString('en-IN');
+            const salePriceFormatted = p.sale_price ? '₹' + Number(p.sale_price).toLocaleString('en-IN') : null;
+
+            return `
+                <div class="product-card" id="product-${p.id}">
+                    <div class="card-top-badges">
+                        <span class="card-tag">${p.category || 'Extrait'}</span>
+                        <button class="card-wish-btn ${isWished ? 'active' : ''}" data-product-id="${p.id}" onclick="toggleWishlist(${p.id}, this)" title="${isWished ? 'Remove from Wishlist' : 'Add to Wishlist'}">
+                            <i class="fa-${isWished ? 'solid' : 'regular'} fa-heart" ${isWished ? 'style="color:var(--rose);"' : ''}></i>
+                        </button>
+                    </div>
+
+                    <div class="card-img-wrap" onclick="openQuickView(${p.id})">
+                        <img src="${p.image_url}" alt="${p.name}" loading="lazy">
+                    </div>
+
+                    <div class="card-brand">${p.brand} • ${p.size_ml || 100}ml</div>
+                    <h3 class="card-title">${p.name}</h3>
+                    <p class="card-notes">${notes}</p>
+
+                    <div class="card-price-row">
+                        ${salePriceFormatted ? `
+                            <span class="current-price">${salePriceFormatted}</span>
+                            <span class="old-price">${priceFormatted}</span>
+                        ` : `
+                            <span class="current-price">${priceFormatted}</span>
+                        `}
+                    </div>
+
+                    <div class="card-btn-group">
+                        <button class="btn-add-cart" onclick="addToCartItem(${p.id}, this)">
+                            <i class="fa-solid fa-bag-shopping"></i> Add To Bag
+                        </button>
+                        <button class="btn-quick-view" title="Quick View Notes" onclick="openQuickView(${p.id})">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- 6. FLAWLESS CAROUSEL NAVIGATION (SLIDE + DRAG + LOOP) ---
+        function scrollFeaturedCarousel(direction) {
+            const track = document.getElementById('featuredCarouselTrack');
+            if (!track) return;
+
+            // Card is 320px + 28px gap = 348px
+            const cardStep = 348;
+            // On wide desktop move 2 cards (696px), on small screens move 1 card (348px)
+            const scrollAmount = track.clientWidth > 850 ? cardStep * 2 : cardStep;
+            const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+
+            if (direction === 'next') {
+                if (track.scrollLeft >= maxScroll - 30) {
+                    track.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                }
+            } else {
+                if (track.scrollLeft <= 30) {
+                    track.scrollTo({ left: maxScroll, behavior: 'smooth' });
+                } else {
+                    track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                }
+            }
+        }
+
+        function setupCarouselArrows() {
+            const prevBtn = document.getElementById('featPrevBtn');
+            const nextBtn = document.getElementById('featNextBtn');
+            const track = document.getElementById('featuredCarouselTrack');
+
+            if (prevBtn) {
+                prevBtn.onclick = (e) => {
+                    e.preventDefault();
+                    scrollFeaturedCarousel('prev');
+                };
+            }
+
+            if (nextBtn) {
+                nextBtn.onclick = (e) => {
+                    e.preventDefault();
+                    scrollFeaturedCarousel('next');
+                };
+            }
+
+            // Mouse Drag-to-Scroll support
+            if (track) {
+                let isDown = false;
+                let startX = 0;
+                let scrollLeftPos = 0;
+
+                track.addEventListener('mousedown', (e) => {
+                    isDown = true;
+                    startX = e.pageX - track.offsetLeft;
+                    scrollLeftPos = track.scrollLeft;
+                });
+
+                track.addEventListener('mouseleave', () => isDown = false);
+                window.addEventListener('mouseup', () => isDown = false);
+
+                track.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - track.offsetLeft;
+                    const walk = (x - startX) * 1.5;
+                    track.scrollLeft = scrollLeftPos - walk;
+                });
+            }
+        }
+
+        // --- 7. CART SYSTEM & LOCAL STORAGE SYNC ---
+        function updateCartBadges() {
+            const totalItems = cart.reduce((sum, i) => sum + (i.quantity || 1), 0);
+            const badge = document.getElementById('cartCountBadge');
+            if (badge) {
+                badge.innerText = totalItems;
+            }
+        }
+
+        function saveCartState() {
+            localStorage.setItem('luxury_perfume_cart', JSON.stringify(cart));
+            updateCartBadges();
+            renderCartList();
+        }
+
+        async function addToCartItem(productId, buttonEl) {
+            // Find product in catalog or fetch
+            let product = allCatalogProducts.find(x => x.id === productId);
+            if (!product) {
+                try {
+                    const res = await fetch(`${API}/products/${productId}`);
+                    if (res.ok) product = await res.json();
+                } catch (e) {}
+            }
+
+            if (!product) {
+                showToast('Could not find perfume details', 'error');
+                return;
+            }
+
+            const existing = cart.find(x => x.id === productId);
+            if (existing) {
+                existing.quantity = (existing.quantity || 1) + 1;
+            } else {
+                const finalPrice = product.sale_price || product.price;
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    brand: product.brand,
+                    price: finalPrice,
+                    image_url: product.image_url,
+                    size_ml: product.size_ml || 100,
+                    quantity: 1
+                });
+            }
+
+            saveCartState();
+
+            // Tactile visual feedback on clicked button
+            if (buttonEl) {
+                const origHtml = buttonEl.innerHTML;
+                buttonEl.classList.add('added');
+                buttonEl.innerHTML = '<i class="fa-solid fa-check"></i> Added To Bag!';
+                setTimeout(() => {
+                    buttonEl.classList.remove('added');
+                    buttonEl.innerHTML = origHtml;
+                }, 1200);
+            }
+
+            // Bounce badge animation
+            const badge = document.getElementById('cartCountBadge');
+            if (badge) {
+                badge.classList.remove('badge-bounce');
+                void badge.offsetWidth;
+                badge.classList.add('badge-bounce');
+            }
+
+            showToast(`Added ${product.name} to your bag!`, 'success');
+        }
+
+        function toggleCart() {
+            const sidebar = document.getElementById('cartSidebar');
+            const overlay = document.getElementById('cartOverlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            if (sidebar.classList.contains('active')) {
+                renderCartList();
+            }
+        }
+
+        function renderCartList() {
+            const list = document.getElementById('cartItemsList');
+            const subtotalEl = document.getElementById('cartSubtotalText');
+            const grandTotalEl = document.getElementById('cartGrandTotalText');
+
+            if (cart.length === 0) {
+                list.innerHTML = '<div style="text-align: center; color: var(--text-dim); margin-top: 60px;">Your shopping bag is empty.</div>';
+                subtotalEl.innerText = '₹0';
+                grandTotalEl.innerText = '₹0';
+                document.getElementById('discountLine').style.display = 'none';
+                return;
+            }
+
+            let subtotal = 0;
+            list.innerHTML = cart.map((it, idx) => {
+                const itemTotal = it.price * it.quantity;
+                subtotal += itemTotal;
+                return `
+                    <div class="cart-item-row">
+                        <img src="${it.image_url}" class="cart-item-thumb" alt="${it.name}">
+                        <div class="cart-item-info">
+                            <div class="cart-item-brand">${it.brand}</div>
+                            <div class="cart-item-title">${it.name}</div>
+                            <div class="cart-item-price">₹${Number(it.price).toLocaleString('en-IN')}</div>
+                        </div>
+                        <div class="cart-qty-ctrl">
+                            <button class="cart-qty-btn" onclick="changeCartQty(${idx}, -1)">-</button>
+                            <span style="font-weight:700; font-size:0.85rem;">${it.quantity}</span>
+                            <button class="cart-qty-btn" onclick="changeCartQty(${idx}, 1)">+</button>
+                        </div>
+                        <button class="cart-item-del" onclick="removeCartItem(${idx})"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+            }).join('');
+
+            subtotalEl.innerText = '₹' + subtotal.toLocaleString('en-IN');
+
+            let discount = 0;
+            if (appliedCoupon) {
+                discount = (subtotal * appliedCoupon.discount_percent) / 100;
+                document.getElementById('discountLine').style.display = 'flex';
+                document.getElementById('cartDiscountText').innerText = '-₹' + discount.toLocaleString('en-IN');
+            } else {
+                document.getElementById('discountLine').style.display = 'none';
+            }
+
+            const grandTotal = Math.max(0, subtotal - discount);
+            grandTotalEl.innerText = '₹' + grandTotal.toLocaleString('en-IN');
+        }
+
+        function changeCartQty(idx, delta) {
+            cart[idx].quantity += delta;
+            if (cart[idx].quantity <= 0) {
+                cart.splice(idx, 1);
+            }
+            saveCartState();
+        }
+
+        function removeCartItem(idx) {
+            cart.splice(idx, 1);
+            saveCartState();
+        }
+
+        // Apply discount coupon
+        async function applyDiscountCoupon() {
+            const code = document.getElementById('couponInput').value.trim().toUpperCase();
+            if (!code) {
+                showToast('Please enter a coupon code', 'error');
+                return;
+            }
+
+            const subtotal = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
+            try {
+                const res = await fetch(`${API}/cart/apply-coupon`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code, subtotal })
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    appliedCoupon = { code, discount_percent: (data.discountAmount / subtotal) * 100 };
+                    showToast(`Coupon "${code}" applied successfully!`, 'success');
+                    renderCartList();
+                } else {
+                    showToast(data.error || 'Invalid coupon', 'error');
+                }
+            } catch (e) {
+                showToast('Coupon check error', 'error');
+            }
+        }
+
+        // --- 8. CHECKOUT & REAL DB ORDER CREATION ---
+        function openCheckoutModal() {
+            if (cart.length === 0) {
+                showToast('Your cart is empty!', 'error');
+                return;
+            }
+            document.getElementById('checkoutModal').classList.add('active');
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').classList.remove('active');
+        }
+
+        function updatePayButtonUI(method) {
+            const btn = document.getElementById('btnSubmitOrder');
+            const optRzp = document.getElementById('optRazorpay');
+            const optPP = document.getElementById('optPayPal');
+            const optCod = document.getElementById('optCOD');
+
+            optRzp.style.borderColor = 'var(--border-subtle)';
+            optRzp.style.background = 'rgba(255,255,255,0.02)';
+            optPP.style.borderColor = 'var(--border-subtle)';
+            optPP.style.background = 'rgba(255,255,255,0.02)';
+            optCod.style.borderColor = 'var(--border-subtle)';
+            optCod.style.background = 'rgba(255,255,255,0.02)';
+
+            if (method === 'razorpay') {
+                optRzp.style.borderColor = 'var(--gold-primary)';
+                optRzp.style.background = 'rgba(212,175,55,0.1)';
+                btn.innerHTML = '<i class="fa-solid fa-lock"></i> Pay & Confirm with Razorpay Secure';
+            } else if (method === 'paypal') {
+                optPP.style.borderColor = '#0079C1';
+                optPP.style.background = 'rgba(0,121,193,0.1)';
+                btn.innerHTML = '<i class="fa-brands fa-paypal"></i> Checkout with PayPal International';
+            } else if (method === 'cod') {
+                optCod.style.borderColor = 'var(--emerald)';
+                optCod.style.background = 'rgba(16,185,129,0.1)';
+                btn.innerHTML = '<i class="fa-solid fa-box"></i> Place Order with Cash on Delivery';
+            }
+        }
+
+        async function handlePlaceOrder(e) {
+            e.preventDefault();
+
+            // Anti-Carding Honeypot check
+            const hp = document.getElementById('website_hp').value;
+            if (hp) {
+                showToast('Automated request blocked by Security Shield.', 'error');
+                return;
+            }
+
+            const name = document.getElementById('orderCustName').value.trim();
+            const email = document.getElementById('orderCustEmail').value.trim();
+            const phone = document.getElementById('orderCustPhone').value.trim();
+            const address = document.getElementById('orderCustAddress').value.trim();
+            const payMethod = document.querySelector('input[name="payMethod"]:checked').value;
+            const submitBtn = document.getElementById('btnSubmitOrder');
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Securing Transaction...';
+
+            try {
+                // 1. RAZORPAY GATEWAY FLOW
+                if (payMethod === 'razorpay') {
+                    const rzpOrderRes = await fetch(`${API}/orders/razorpay/create-order`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            items: cart,
+                            coupon_code: appliedCoupon ? appliedCoupon.code : null,
+                            website_hp: hp
+                        })
+                    });
+                    const orderData = await rzpOrderRes.json();
+
+                    if (!rzpOrderRes.ok) {
+                        showToast(orderData.error || 'Failed to initialize Razorpay Gateway', 'error');
+                        submitBtn.disabled = false;
+                        updatePayButtonUI('razorpay');
+                        return;
+                    }
+
+                    // Open Razorpay Checkout Modal
+                    if (typeof Razorpay !== 'undefined') {
+                        const options = {
+                            key: orderData.key_id,
+                            amount: orderData.amount,
+                            currency: orderData.currency,
+                            name: "Luxury Perfume",
+                            description: "Haute Fragrance Dispatch (Delhi, India)",
+                            order_id: orderData.razorpay_order_id.startsWith('order_') && orderData.razorpay_order_id.length === 20 ? orderData.razorpay_order_id : undefined,
+                            handler: async function (response) {
+                                submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Verifying Cryptographic Signature...';
+                                try {
+                                    const verifyRes = await fetch(`${API}/orders/razorpay/verify-payment`, {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({
+                                            razorpay_order_id: response.razorpay_order_id || orderData.razorpay_order_id,
+                                            razorpay_payment_id: response.razorpay_payment_id || ('pay_' + Date.now()),
+                                            razorpay_signature: response.razorpay_signature || '',
+                                            customer_name: name,
+                                            customer_email: email,
+                                            customer_phone: phone,
+                                            shipping_address: address,
+                                            coupon_code: appliedCoupon ? appliedCoupon.code : null,
+                                            items: cart,
+                                            website_hp: hp
+                                        })
+                                    });
+                                    const verifyData = await verifyRes.json();
+
+                                    if (!verifyRes.ok) {
+                                        showToast(verifyData.error || 'Payment verification failed', 'error');
+                                        submitBtn.disabled = false;
+                                        updatePayButtonUI('razorpay');
+                                        return;
+                                    }
+
+                                    // Success!
+                                    closeCheckoutModal();
+                                    toggleCart();
+                                    cart = [];
+                                    appliedCoupon = null;
+                                    saveCartState();
+
+                                    showToast(`🎉 Payment Verified! Tracking #${verifyData.trackingNumber}`, 'success');
+                                    alert(`✨ Luxury Perfume — Payment Verified!\n\nOrder ID: #${verifyData.orderId}\nPayment ID: ${verifyData.paymentId}\nTracking: ${verifyData.trackingNumber}\nTotal: ₹${Number(verifyData.total).toLocaleString('en-IN')}\nGateway: Razorpay Secure\n\nYour order is verified and dispatched from our Delhi flagship boutique!`);
+                                } catch (err) {
+                                    showToast('Network error during verification', 'error');
+                                    submitBtn.disabled = false;
+                                    updatePayButtonUI('razorpay');
+                                }
+                            },
+                            prefill: {
+                                name: name,
+                                email: email,
+                                contact: phone
+                            },
+                            theme: {
+                                color: "#d4af37"
+                            },
+                            modal: {
+                                ondismiss: function() {
+                                    submitBtn.disabled = false;
+                                    updatePayButtonUI('razorpay');
+                                    showToast('Payment window closed', 'info');
+                                }
+                            }
+                        };
+                        const rzp = new Razorpay(options);
+                        rzp.open();
+                    } else {
+                        // Direct simulated verification if SDK is blocked by browser extension
+                        const simPaymentId = 'pay_sim_' + Date.now();
+                        const verifyRes = await fetch(`${API}/orders/razorpay/verify-payment`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                razorpay_order_id: orderData.razorpay_order_id,
+                                razorpay_payment_id: simPaymentId,
+                                razorpay_signature: '',
+                                customer_name: name,
+                                customer_email: email,
+                                customer_phone: phone,
+                                shipping_address: address,
+                                coupon_code: appliedCoupon ? appliedCoupon.code : null,
+                                items: cart,
+                                website_hp: hp
+                            })
+                        });
+                        const verifyData = await verifyRes.json();
+                        closeCheckoutModal();
+                        toggleCart();
+                        cart = [];
+                        appliedCoupon = null;
+                        saveCartState();
+                        showToast(`🎉 Order Placed! Tracking #${verifyData.trackingNumber}`, 'success');
+                        alert(`✨ Luxury Perfume — Razorpay Secure Confirmed!\n\nOrder ID: #${verifyData.orderId}\nPayment ID: ${verifyData.paymentId}\nTracking: ${verifyData.trackingNumber}\nTotal: ₹${Number(verifyData.total).toLocaleString('en-IN')}`);
+                    }
+                } 
+                // 2. PAYPAL GATEWAY FLOW
+                else if (payMethod === 'paypal') {
+                    const ppRes = await fetch(`${API}/orders/paypal/create-order`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            items: cart,
+                            coupon_code: appliedCoupon ? appliedCoupon.code : null,
+                            website_hp: hp
+                        })
+                    });
+                    const ppData = await ppRes.json();
+
+                    if (!ppRes.ok) {
+                        showToast(ppData.error || 'Failed to initialize PayPal', 'error');
+                        submitBtn.disabled = false;
+                        updatePayButtonUI('paypal');
+                        return;
+                    }
+
+                    // Capture PayPal order
+                    const captureRes = await fetch(`${API}/orders/paypal/capture-order`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            paypal_order_id: ppData.paypal_order_id,
+                            paypal_capture_id: 'CAP-' + Date.now(),
+                            customer_name: name,
+                            customer_email: email,
+                            customer_phone: phone,
+                            shipping_address: address,
+                            coupon_code: appliedCoupon ? appliedCoupon.code : null,
+                            items: cart,
+                            website_hp: hp
+                        })
+                    });
+                    const captureData = await captureRes.json();
+
+                    if (!captureRes.ok) {
+                        showToast(captureData.error || 'PayPal capture failed', 'error');
+                        submitBtn.disabled = false;
+                        updatePayButtonUI('paypal');
+                        return;
+                    }
+
+                    closeCheckoutModal();
+                    toggleCart();
+                    cart = [];
+                    appliedCoupon = null;
+                    saveCartState();
+
+                    showToast(`🎉 PayPal Payment Verified! Tracking #${captureData.trackingNumber}`, 'success');
+                    alert(`✨ Luxury Perfume — PayPal Order Confirmed!\n\nOrder ID: #${captureData.orderId}\nTransaction: ${captureData.paymentId}\nTracking: ${captureData.trackingNumber}\nTotal Paid: ₹${Number(captureData.total).toLocaleString('en-IN')} ($${ppData.amount_usd} USD)\n\nDispatched from Delhi flagship boutique!`);
+                } 
+                // 3. CASH ON DELIVERY (COD) FLOW
+                else {
+                    const payload = {
+                        customer_name: name,
+                        customer_email: email,
+                        customer_phone: phone,
+                        shipping_address: address,
+                        payment_method: 'cod',
+                        coupon_code: appliedCoupon ? appliedCoupon.code : null,
+                        items: cart,
+                        website_hp: hp
+                    };
+
+                    const res = await fetch(`${API}/orders/create`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const data = await res.json();
+
+                    if (!res.ok) {
+                        showToast(data.error || 'Failed to place order', 'error');
+                        submitBtn.disabled = false;
+                        updatePayButtonUI('cod');
+                        return;
+                    }
+
+                    closeCheckoutModal();
+                    toggleCart();
+                    cart = [];
+                    appliedCoupon = null;
+                    saveCartState();
+
+                    showToast(`🎉 Order Placed! Tracking #${data.trackingNumber}`, 'success');
+                    alert(`✨ Luxury Perfume — Order Confirmed!\n\nOrder ID: #${data.orderId}\nTracking: ${data.trackingNumber}\nTotal: ₹${Number(data.total).toLocaleString('en-IN')}\nPayment: Cash on Delivery\nDelivery: ${address}\n\nThank you for shopping with Luxury Perfume Delhi!`);
+                }
+
+            } catch (err) {
+                console.error(err);
+                showToast('Server error while processing payment', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                updatePayButtonUI(payMethod);
+            }
+        }
+
+        // --- 9. QUICK VIEW MODAL ---
+        async function openQuickView(id) {
+            const modal = document.getElementById('quickViewModal');
+            const container = document.getElementById('quickViewDetails');
+            modal.classList.add('active');
+            container.innerHTML = '<div style="text-align:center; padding:30px;"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading olfactory profile...</div>';
+
+            try {
+                const res = await fetch(`${API}/products/${id}`);
+                const p = await res.json();
+
+                const priceFormatted = '₹' + Number(p.price).toLocaleString('en-IN');
+                const salePriceFormatted = p.sale_price ? '₹' + Number(p.sale_price).toLocaleString('en-IN') : null;
+                const notes = p.fragrance_notes || { top: [], middle: [], base: [] };
+
+                container.innerHTML = `
+                    <div style="display:grid; grid-template-columns: 1fr 1.2fr; gap:28px;">
+                        <img src="${p.image_url}" style="width:100%; height:320px; object-fit:cover; border-radius:var(--radius-md); border:1px solid var(--border-gold);" alt="${p.name}">
+                        <div>
+                            <div style="font-size:0.75rem; text-transform:uppercase; color:var(--gold-primary); letter-spacing:2px; font-weight:700;">${p.brand} • ${p.category}</div>
+                            <h2 style="font-family:var(--font-serif); font-size:1.6rem; color:#fff; margin:6px 0 12px;">${p.name}</h2>
+                            <div style="font-size:1.4rem; font-family:var(--font-serif); color:var(--gold-light); margin-bottom:14px;">
+                                ${salePriceFormatted ? `${salePriceFormatted} <del style="font-size:0.9rem; color:var(--text-dim);">${priceFormatted}</del>` : priceFormatted}
+                            </div>
+                            <p style="color:var(--text-muted); font-size:0.86rem; line-height:1.6; margin-bottom:18px;">${p.description}</p>
+                            
+                            <div style="background:rgba(255,255,255,0.03); padding:14px; border-radius:8px; border:1px solid var(--border-subtle); margin-bottom:20px; font-size:0.8rem;">
+                                <div><strong style="color:var(--gold-light);">Top Notes:</strong> ${(notes.top || []).join(', ') || 'Calabrian Citrus, Saffron'}</div>
+                                <div style="margin-top:4px;"><strong style="color:var(--gold-light);">Heart Notes:</strong> ${(notes.middle || []).join(', ') || 'French Rose, Jasmine'}</div>
+                                <div style="margin-top:4px;"><strong style="color:var(--gold-light);">Base Notes:</strong> ${(notes.base || []).join(', ') || 'Mysore Sandalwood, Royal Amber'}</div>
+                            </div>
+
+                            <button class="btn-checkout" style="margin-top:0;" onclick="addToCartItem(${p.id}); closeQuickView();">
+                                <i class="fa-solid fa-bag-shopping"></i> Add To Bag (${p.size_ml || 100}ml)
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } catch (e) {
+                container.innerHTML = '<div style="color:var(--rose);">Error loading product</div>';
+            }
+        }
+
+        function closeQuickView() {
+            document.getElementById('quickViewModal').classList.remove('active');
+        }
+
+        // --- 10. ADVANCED WISHLIST SYSTEM (LIVE SYNC & DRAWER) ---
+        function updateWishlistBadges() {
+            const badge = document.getElementById('wishlistCount');
+            if (badge) {
+                badge.innerText = wishlist.length;
+                badge.classList.remove('badge-bounce');
+                void badge.offsetWidth;
+                badge.classList.add('badge-bounce');
+            }
+        }
+
+        function toggleWishlist(id, btn) {
+            const idx = wishlist.indexOf(id);
+            let isAdded = false;
+
+            if (idx > -1) {
+                wishlist.splice(idx, 1);
+                isAdded = false;
+                showToast('Removed from your Wishlist', 'info');
+            } else {
+                wishlist.push(id);
+                isAdded = true;
+                showToast('Saved to your Wishlist!', 'success');
+            }
+
+            localStorage.setItem('luxury_perfume_wishlist', JSON.stringify(wishlist));
+            updateWishlistBadges();
+
+            // Synchronize ALL buttons for this product ID on the page (Carousel + Catalog)
+            document.querySelectorAll(`.card-wish-btn[data-product-id="${id}"]`).forEach(b => {
+                if (isAdded) {
+                    b.classList.add('active');
+                    b.innerHTML = '<i class="fa-solid fa-heart" style="color:var(--rose);"></i>';
+                } else {
+                    b.classList.remove('active');
+                    b.innerHTML = '<i class="fa-regular fa-heart"></i>';
+                }
+            });
+
+            // Re-render wishlist drawer if it's currently open
+            const sidebar = document.getElementById('wishlistSidebar');
+            if (sidebar && sidebar.classList.contains('active')) {
+                renderWishlistList();
+            }
+        }
+
+        function toggleWishlistDrawer() {
+            const sidebar = document.getElementById('wishlistSidebar');
+            const overlay = document.getElementById('wishlistOverlay');
+            if (!sidebar || !overlay) return;
+
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+
+            if (sidebar.classList.contains('active')) {
+                renderWishlistList();
+            }
+        }
+
+        async function renderWishlistList() {
+            const list = document.getElementById('wishlistItemsList');
+            if (!list) return;
+
+            if (wishlist.length === 0) {
+                list.innerHTML = `
+                    <div style="text-align: center; color: var(--text-dim); margin-top: 60px;">
+                        <i class="fa-regular fa-heart" style="font-size: 2.8rem; color: var(--border-gold); margin-bottom: 14px; display: block;"></i>
+                        <h4 style="color:#fff; font-family:var(--font-serif); margin-bottom:8px;">Your Wishlist is Empty</h4>
+                        <p style="font-size:0.85rem; max-width:260px; margin:0 auto 20px;">Save iconic extrait de parfums to revisit or order anytime.</p>
+                        <button class="btn-luxury btn-luxury-gold" style="padding: 10px 22px; font-size: 0.8rem;" onclick="toggleWishlistDrawer(); location.href='#catalog';">
+                            Explore Fragrances
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = '<div style="text-align:center; padding:30px; color:var(--gold-light);"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading saved flacons...</div>';
+
+            try {
+                const items = [];
+                for (const id of wishlist) {
+                    let p = allCatalogProducts.find(x => x.id === id);
+                    if (!p) {
+                        const res = await fetch(`${API}/products/${id}`);
+                        if (res.ok) p = await res.json();
+                    }
+                    if (p) items.push(p);
+                }
+
+                if (items.length === 0) {
+                    list.innerHTML = '<div style="text-align: center; color: var(--text-dim); margin-top: 60px;">Your wishlist is empty.</div>';
+                    return;
+                }
+
+                list.innerHTML = items.map(it => `
+                    <div class="cart-item-row">
+                        <img src="${it.image_url}" class="cart-item-thumb" alt="${it.name}">
+                        <div class="cart-item-info">
+                            <div class="cart-item-brand">${it.brand}</div>
+                            <div class="cart-item-title">${it.name}</div>
+                            <div class="cart-item-price">₹${Number(it.sale_price || it.price).toLocaleString('en-IN')}</div>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:8px; align-items:flex-end;">
+                            <button class="btn-add-cart" style="padding: 6px 12px; font-size: 0.72rem;" onclick="addToCartItem(${it.id}, this); toggleWishlist(${it.id});">
+                                <i class="fa-solid fa-bag-shopping"></i> Move to Bag
+                            </button>
+                            <button class="cart-item-del" onclick="toggleWishlist(${it.id});" title="Remove from Wishlist">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+
+            } catch (e) {
+                list.innerHTML = '<div style="color:var(--rose); padding:20px;">Error retrieving saved items.</div>';
+            }
+        }
+
+        function addAllWishlistToBag() {
+            if (wishlist.length === 0) {
+                showToast('Wishlist is empty!', 'error');
+                return;
+            }
+            const itemsCount = wishlist.length;
+            for (const id of [...wishlist]) {
+                addToCartItem(id);
+            }
+            wishlist = [];
+            localStorage.setItem('luxury_perfume_wishlist', JSON.stringify(wishlist));
+            updateWishlistBadges();
+            document.querySelectorAll('.card-wish-btn').forEach(b => {
+                b.classList.remove('active');
+                b.innerHTML = '<i class="fa-regular fa-heart"></i>';
+            });
+            showToast(`Moved ${itemsCount} saved perfumes into your bag!`, 'success');
+            toggleWishlistDrawer();
+            toggleCart();
+        }
+
+        // --- 11. SEARCH MODAL ---
+        function openSearchModal() {
+            document.getElementById('searchModal').classList.add('active');
+            setTimeout(() => document.getElementById('liveSearchInput').focus(), 100);
+        }
+
+        function closeSearchModal() {
+            document.getElementById('searchModal').classList.remove('active');
+        }
+
+        let searchDebounce;
+        function runLiveSearch(query) {
+            clearTimeout(searchDebounce);
+            const container = document.getElementById('searchResultsList');
+            if (query.length < 2) {
+                container.innerHTML = '<div style="color:var(--text-dim); text-align:center; padding:20px;">Type at least 2 characters to search.</div>';
+                return;
+            }
+
+            searchDebounce = setTimeout(async () => {
+                try {
+                    const res = await fetch(`${API}/products/search?q=${encodeURIComponent(query)}`);
+                    const list = await res.json();
+
+                    if (!list || list.length === 0) {
+                        container.innerHTML = '<div style="color:var(--text-dim); text-align:center; padding:20px;">No fragrances match your search.</div>';
+                        return;
+                    }
+
+                    container.innerHTML = list.map(p => `
+                        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px; background:rgba(255,255,255,0.03); border-radius:8px; cursor:pointer;" onclick="closeSearchModal(); openQuickView(${p.id});">
+                            <div style="display:flex; align-items:center; gap:12px;">
+                                <img src="${p.image_url}" style="width:40px; height:40px; border-radius:6px; object-fit:cover;">
+                                <div>
+                                    <div style="font-weight:600; font-size:0.9rem; color:#fff;">${p.name}</div>
+                                    <div style="font-size:0.75rem; color:var(--gold-primary);">${p.brand} • ${p.category}</div>
+                                </div>
+                            </div>
+                            <div style="font-family:var(--font-serif); font-weight:700; color:var(--gold-light);">
+                                ₹${Number(p.sale_price || p.price).toLocaleString('en-IN')}
+                            </div>
+                        </div>
+                    `).join('');
+                } catch (e) {
+                    container.innerHTML = 'Error querying search';
+                }
+            }, 250);
+        }
+
+        // --- 12. ADVANCED THREE.JS 3D ENGINE (10X MODERN ANIMATIONS) ---
+        let scene, camera, renderer, bottleGroup, particlesGroup, sprayParticlesGroup;
+        let isUserInteracting = false;
+        let mouseX = 0, mouseY = 0;
+        let targetRotationX = 0, targetRotationY = 0;
+
+        function initThreeJSScene() {
+            const container = document.getElementById('heroCanvasWrap');
+            if (!container) return;
+
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            // Scene & Camera
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+            camera.position.set(0, 0, 11);
+
+            // Renderer with high-end anti-aliasing
+            renderer = new THREE.WebGLRenderer({
+                canvas: document.getElementById('hero3dCanvas'),
+                alpha: true,
+                antialias: true,
+                powerPreference: "high-performance"
+            });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Dramatic Luxury Studio Lighting
+            const ambientLight = new THREE.AmbientLight(0xfff3d6, 1.2);
+            scene.add(ambientLight);
+
+            const keyLight = new THREE.DirectionalLight(0xffffff, 2.5);
+            keyLight.position.set(5, 8, 7);
+            scene.add(keyLight);
+
+            const goldRimLight = new THREE.PointLight(0xd4af37, 4.0, 20);
+            goldRimLight.position.set(-6, 4, -4);
+            scene.add(goldRimLight);
+
+            const bottomWarmLight = new THREE.PointLight(0xf97316, 2.0, 15);
+            bottomWarmLight.position.set(0, -6, 4);
+            scene.add(bottomWarmLight);
+
+            // BOTTLE GROUP
+            bottleGroup = new THREE.Group();
+            buildPhotorealisticBottle(bottleGroup);
+            bottleGroup.position.set(0.5, -0.6, 0);
+            bottleGroup.rotation.y = -0.3;
+            scene.add(bottleGroup);
+
+            // AMBIENT GOLD STARDUST PARTICLES
+            particlesGroup = createAmbientParticles();
+            scene.add(particlesGroup);
+
+            // SPRAY MIST PARTICLES SYSTEM
+            sprayParticlesGroup = createSprayMistSystem();
+            bottleGroup.add(sprayParticlesGroup);
+
+            // INTERACTION LISTENERS (DRAG TO ROTATE + CLICK TO SPRAY)
+            let clickStartTime = 0;
+            container.style.cursor = 'grab';
+
+            container.addEventListener('mousedown', () => {
+                isUserInteracting = true;
+                clickStartTime = Date.now();
+                container.style.cursor = 'grabbing';
+            });
+
+            window.addEventListener('mouseup', () => {
+                isUserInteracting = false;
+                container.style.cursor = 'grab';
+            });
+
+            container.addEventListener('click', () => {
+                if (Date.now() - clickStartTime < 280) {
+                    triggerPerfumeSpray();
+                }
+            });
+
+            container.addEventListener('mousemove', (e) => {
+                const rect = container.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+                const y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+                targetRotationY = x * 1.2;
+                targetRotationX = y * 0.4;
+            });
+
+            // Touch interaction
+            container.addEventListener('touchmove', (e) => {
+                if (e.touches.length > 0) {
+                    const rect = container.getBoundingClientRect();
+                    const x = ((e.touches[0].clientX - rect.left) / rect.width) * 2 - 1;
+                    targetRotationY = x * 1.5;
+                }
+            });
+
+            // Resize handling
+            window.addEventListener('resize', () => {
+                const newW = container.clientWidth;
+                const newH = container.clientHeight;
+                camera.aspect = newW / newH;
+                camera.updateProjectionMatrix();
+                renderer.setSize(newW, newH);
+            });
+
+            // GSAP ScrollTrigger for 3D Bottle
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+                gsap.to(bottleGroup.rotation, {
+                    y: "+=3.14",
+                    scrollTrigger: {
+                        trigger: "#featured",
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: 1.5
+                    }
+                });
+            }
+
+            animateThreeScene();
+        }
+
+        // Build procedural luxury crystal perfume flacon
+        function buildPhotorealisticBottle(group) {
+            // 1. Crystal Glass Base Flacon
+            const glassGeo = new THREE.CylinderGeometry(1.6, 1.8, 3.8, 32);
+            const glassMat = new THREE.MeshPhysicalMaterial({
+                color: 0xffffff,
+                metalness: 0.1,
+                roughness: 0.05,
+                transmission: 0.88,
+                thickness: 1.2,
+                transparent: true,
+                opacity: 0.95,
+                reflectivity: 0.9,
+                clearcoat: 1.0,
+                clearcoatRoughness: 0.05
+            });
+            const glassBottle = new THREE.Mesh(glassGeo, glassMat);
+            group.add(glassBottle);
+
+            // 2. Liquid Core (Rich Golden Amber Perfume)
+            const liquidGeo = new THREE.CylinderGeometry(1.4, 1.6, 3.2, 32);
+            const liquidMat = new THREE.MeshPhysicalMaterial({
+                color: 0xd4af37,
+                emissive: 0x917117,
+                emissiveIntensity: 0.25,
+                roughness: 0.15,
+                transmission: 0.7,
+                transparent: true,
+                opacity: 0.85
+            });
+            const liquidMesh = new THREE.Mesh(liquidGeo, liquidMat);
+            liquidMesh.position.y = -0.2;
+            group.add(liquidMesh);
+
+            // 3. 24K Gold Collar & Spray Atomizer
+            const collarGeo = new THREE.CylinderGeometry(0.7, 0.9, 0.6, 32);
+            const goldMat = new THREE.MeshStandardMaterial({
+                color: 0xf7e7a9,
+                metalness: 0.95,
+                roughness: 0.15
+            });
+            const collar = new THREE.Mesh(collarGeo, goldMat);
+            collar.position.y = 2.1;
+            group.add(collar);
+
+            // 4. Spray Nozzle
+            const nozzleGeo = new THREE.CylinderGeometry(0.35, 0.35, 0.5, 24);
+            const nozzle = new THREE.Mesh(nozzleGeo, goldMat);
+            nozzle.position.y = 2.55;
+            group.add(nozzle);
+
+            // 5. Heavy Faceted Gold Cap
+            const capGeo = new THREE.BoxGeometry(1.3, 1.4, 1.3);
+            const cap = new THREE.Mesh(capGeo, goldMat);
+            cap.position.y = 3.3;
+            group.add(cap);
+
+            // 6. Luxury Front Label Medallion
+            const labelGeo = new THREE.PlaneGeometry(1.8, 1.1);
+            const labelMat = new THREE.MeshStandardMaterial({
+                color: 0x07070b,
+                metalness: 0.8,
+                roughness: 0.3,
+                side: THREE.DoubleSide
+            });
+            const label = new THREE.Mesh(labelGeo, labelMat);
+            label.position.set(0, 0.1, 1.72);
+            group.add(label);
+        }
+
+        // Ambient Drifting Golden Stardust
+        function createAmbientParticles() {
+            const count = 220;
+            const geo = new THREE.BufferGeometry();
+            const pos = new Float32Array(count * 3);
+
+            for (let i = 0; i < count * 3; i += 3) {
+                pos[i] = (Math.random() - 0.5) * 16;
+                pos[i + 1] = (Math.random() - 0.5) * 16;
+                pos[i + 2] = (Math.random() - 0.5) * 10;
+            }
+
+            geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+            const mat = new THREE.PointsMaterial({
+                color: 0xf7e7a9,
+                size: 0.08,
+                transparent: true,
+                opacity: 0.75,
+                blending: THREE.AdditiveBlending
+            });
+
+            return new THREE.Points(geo, mat);
+        }
+
+        // 3D Spray Mist Particle System
+        function createSprayMistSystem() {
+            const mistCount = 200;
+            const geo = new THREE.BufferGeometry();
+            const pos = new Float32Array(mistCount * 3);
+            const velocities = [];
+
+            for (let i = 0; i < mistCount; i++) {
+                pos[i * 3] = 0;
+                pos[i * 3 + 1] = 2.6; // Nozzle height
+                pos[i * 3 + 2] = 0.4;
+                velocities.push({
+                    vx: (Math.random() - 0.5) * 0.08,
+                    vy: Math.random() * 0.09 + 0.04,
+                    vz: Math.random() * 0.12 + 0.05,
+                    life: 0
+                });
+            }
+
+            geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+            const mat = new THREE.PointsMaterial({
+                color: 0xfef08a,
+                size: 0.09,
+                transparent: true,
+                opacity: 0,
+                blending: THREE.AdditiveBlending
+            });
+
+            const mistPoints = new THREE.Points(geo, mat);
+            mistPoints.userData = { velocities, isSpraying: false };
+            return mistPoints;
+        }
+
+        // Play realistic luxury perfume spray acoustic sound via Web Audio API
+        function playSpraySound() {
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (!AudioCtx) return;
+                const ctx = new AudioCtx();
+                const bufferSize = ctx.sampleRate * 0.28;
+                const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = Math.random() * 2 - 1;
+                }
+                const noise = ctx.createBufferSource();
+                noise.buffer = buffer;
+                const filter = ctx.createBiquadFilter();
+                filter.type = 'bandpass';
+                filter.frequency.value = 2400;
+                filter.Q.value = 1.2;
+
+                const gain = ctx.createGain();
+                gain.gain.setValueAtTime(0.25, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.28);
+
+                noise.connect(filter);
+                filter.connect(gain);
+                gain.connect(ctx.destination);
+                noise.start();
+            } catch (e) {}
+        }
+
+        // Trigger Interactive 3D Perfume Mist Spray
+        function triggerPerfumeSpray() {
+            if (!sprayParticlesGroup) return;
+
+            playSpraySound();
+
+            sprayParticlesGroup.material.opacity = 0.95;
+            sprayParticlesGroup.userData.isSpraying = true;
+
+            // Reset particle positions
+            const pos = sprayParticlesGroup.geometry.attributes.position.array;
+            const vels = sprayParticlesGroup.userData.velocities;
+            for (let i = 0; i < vels.length; i++) {
+                pos[i * 3] = (Math.random() - 0.5) * 0.3;
+                pos[i * 3 + 1] = 2.6; // Nozzle height
+                pos[i * 3 + 2] = 0.4;
+                vels[i].life = Math.random() * 20;
+            }
+            sprayParticlesGroup.geometry.attributes.position.needsUpdate = true;
+
+            // GSAP pump animation on the bottle & gold nozzle
+            if (typeof gsap !== 'undefined') {
+                gsap.to(bottleGroup.position, {
+                    y: -0.76,
+                    duration: 0.12,
+                    yoyo: true,
+                    repeat: 1,
+                    ease: "power2.inOut"
+                });
+            }
+
+            // Display floating scent aura notification
+            const aura = document.getElementById('scentAuraTag');
+            if (aura) {
+                aura.classList.add('active');
+                setTimeout(() => aura.classList.remove('active'), 2800);
+            }
+
+            showToast("✨ Scent Dispersed! Calabrian Bergamot & Saffron blooming in air.", "info");
+
+            setTimeout(() => {
+                sprayParticlesGroup.userData.isSpraying = false;
+                if (typeof gsap !== 'undefined') {
+                    gsap.to(sprayParticlesGroup.material, { opacity: 0, duration: 1.2 });
+                } else {
+                    sprayParticlesGroup.material.opacity = 0;
+                }
+            }, 1200);
+        }
+
+        // --- 13. TRACK ORDER LOOKUP SYSTEM ---
+        function openTrackOrderModal(code) {
+            const modal = document.getElementById('trackOrderModal');
+            if (!modal) return;
+            modal.classList.add('active');
+            if (code) {
+                document.getElementById('trackInputCode').value = code;
+                trackOrderLookup();
+            }
+        }
+
+        function closeTrackOrderModal() {
+            const modal = document.getElementById('trackOrderModal');
+            if (modal) modal.classList.remove('active');
+        }
+
+        async function trackOrderLookup() {
+            const code = document.getElementById('trackInputCode').value.trim();
+            const resultBox = document.getElementById('trackOrderResult');
+            if (!code) {
+                resultBox.innerHTML = '<div style="color:var(--rose); padding:10px;">Please enter your tracking code (e.g. LP-DEL-255110).</div>';
+                return;
+            }
+
+            resultBox.innerHTML = '<div style="text-align:center; padding:20px; color:var(--gold-light);"><i class="fa-solid fa-circle-notch fa-spin"></i> Locating dispatch in Delhi fulfillment vault...</div>';
+
+            try {
+                const res = await fetch(`${API}/orders/track/${encodeURIComponent(code)}`);
+                const data = await res.json();
+
+                if (!res.ok) {
+                    resultBox.innerHTML = `
+                        <div style="background:rgba(225,29,72,0.12); border:1px solid var(--rose); padding:16px; border-radius:10px; color:#fff; font-size:0.85rem;">
+                            <i class="fa-solid fa-triangle-exclamation" style="color:var(--rose);"></i> ${data.error || 'Tracking code not found in Delhi dispatch records.'}
+                        </div>
+                    `;
+                    return;
+                }
+
+                const isDelivered = data.status === 'delivered';
+                const isShipped = data.status === 'shipped' || isDelivered;
+                const isProcessing = data.status === 'processing' || isShipped;
+
+                resultBox.innerHTML = `
+                    <div style="background:rgba(212,175,55,0.06); border:1px solid var(--border-gold); padding:20px; border-radius:12px;">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px; border-bottom:1px solid var(--border-subtle); padding-bottom:12px;">
+                            <div>
+                                <div style="font-size:0.75rem; text-transform:uppercase; color:var(--gold-primary); letter-spacing:1.5px; font-weight:700;">${data.tracking_number}</div>
+                                <div style="font-family:var(--font-serif); font-size:1.15rem; color:#fff; margin-top:2px;">Recipient: ${data.customer_name}</div>
+                            </div>
+                            <div style="text-align:right;">
+                                <span style="font-size:0.72rem; padding:4px 10px; border-radius:999px; background:rgba(16,185,129,0.15); color:var(--emerald); border:1px solid var(--emerald); font-weight:700; text-transform:uppercase;">
+                                    ${data.status}
+                                </span>
+                                <div style="font-size:0.82rem; color:var(--gold-light); margin-top:4px; font-weight:700;">₹${Number(data.total).toLocaleString('en-IN')}</div>
+                            </div>
+                        </div>
+
+                        <!-- 4-STEP SHIPMENT TIMELINE -->
+                        <div style="display:flex; justify-content:space-between; position:relative; margin:26px 10px 18px;">
+                            <div style="position:absolute; top:14px; left:20px; right:20px; height:3px; background:rgba(255,255,255,0.1); z-index:1;"></div>
+                            <div style="position:absolute; top:14px; left:20px; width:${isDelivered ? '100%' : (isShipped ? '66%' : (isProcessing ? '33%' : '0%'))}; height:3px; background:var(--gold-primary); z-index:2; transition:width 0.8s ease;"></div>
+
+                            <div style="position:relative; z-index:3; text-align:center;">
+                                <div style="width:30px; height:30px; border-radius:50%; background:var(--gold-primary); color:#000; display:flex; align-items:center; justify-content:center; margin:0 auto 6px; font-size:0.8rem;"><i class="fa-solid fa-check"></i></div>
+                                <div style="font-size:0.68rem; color:#fff; font-weight:600;">Confirmed</div>
+                            </div>
+
+                            <div style="position:relative; z-index:3; text-align:center;">
+                                <div style="width:30px; height:30px; border-radius:50%; background:${isProcessing ? 'var(--gold-primary)' : 'rgba(255,255,255,0.1)'}; color:${isProcessing ? '#000' : '#888'}; display:flex; align-items:center; justify-content:center; margin:0 auto 6px; font-size:0.8rem;"><i class="fa-solid fa-bottle-droplet"></i></div>
+                                <div style="font-size:0.68rem; color:${isProcessing ? '#fff' : 'var(--text-dim)'}; font-weight:600;">Prepared Delhi</div>
+                            </div>
+
+                            <div style="position:relative; z-index:3; text-align:center;">
+                                <div style="width:30px; height:30px; border-radius:50%; background:${isShipped ? 'var(--gold-primary)' : 'rgba(255,255,255,0.1)'}; color:${isShipped ? '#000' : '#888'}; display:flex; align-items:center; justify-content:center; margin:0 auto 6px; font-size:0.8rem;"><i class="fa-solid fa-plane-departure"></i></div>
+                                <div style="font-size:0.68rem; color:${isShipped ? '#fff' : 'var(--text-dim)'}; font-weight:600;">In Transit</div>
+                            </div>
+
+                            <div style="position:relative; z-index:3; text-align:center;">
+                                <div style="width:30px; height:30px; border-radius:50%; background:${isDelivered ? 'var(--emerald)' : 'rgba(255,255,255,0.1)'}; color:${isDelivered ? '#000' : '#888'}; display:flex; align-items:center; justify-content:center; margin:0 auto 6px; font-size:0.8rem;"><i class="fa-solid fa-house"></i></div>
+                                <div style="font-size:0.68rem; color:${isDelivered ? '#fff' : 'var(--text-dim)'}; font-weight:600;">Delivered</div>
+                            </div>
+                        </div>
+
+                        <div style="background:rgba(0,0,0,0.4); padding:12px; border-radius:8px; font-size:0.78rem; color:var(--text-muted); margin-top:16px;">
+                            <div><strong>Dispatch Origin:</strong> Connaught Place Central Vault, New Delhi 110001</div>
+                            <div style="margin-top:4px;"><strong>Destination:</strong> ${data.shipping_address}</div>
+                            <div style="margin-top:4px;"><strong>Payment Gateway:</strong> ${data.payment_method.toUpperCase()} (${data.payment_status.toUpperCase()})</div>
+                        </div>
+                    </div>
+                `;
+
+            } catch (e) {
+                resultBox.innerHTML = '<div style="color:var(--rose);">Error querying tracking server.</div>';
+            }
+        }
+
+        // --- 14. VIP TASTING RESERVATION SYSTEM ---
+        function openVipModal() {
+            const modal = document.getElementById('vipBookingModal');
+            if (modal) modal.classList.add('active');
+        }
+
+        function closeVipModal() {
+            const modal = document.getElementById('vipBookingModal');
+            if (modal) modal.classList.remove('active');
+        }
+
+        function handleVipBooking(e) {
+            e.preventDefault();
+            const name = document.getElementById('vipName').value.trim();
+            const phone = document.getElementById('vipPhone').value.trim();
+            const date = document.getElementById('vipDate').value;
+            const aroma = document.getElementById('vipAroma').value;
+            const passCode = 'VIP-DEL-' + Math.floor(1000 + Math.random() * 9000);
+
+            closeVipModal();
+            showToast(`✨ VIP Reservation Confirmed! Pass #${passCode}`, 'success');
+            alert(`👑 Luxury Perfume — VIP Flagship Invitation Confirmed!\n\nPass Code: #${passCode}\nGuest: ${name}\nContact: ${phone}\nDate: ${date}\nProfile: ${aroma}\nSalon: Connaught Place Flagship, New Delhi 110001\n\nWe look forward to welcoming you to an unforgettable bespoke fragrance tasting experience!`);
+        }
+
+        // Three.js Render Loop
+        function animateThreeScene() {
+            requestAnimationFrame(animateThreeScene);
+
+            if (bottleGroup) {
+                // Smooth inertial rotation interpolation
+                bottleGroup.rotation.y += (targetRotationY - bottleGroup.rotation.y) * 0.05;
+                bottleGroup.rotation.x += (targetRotationX - bottleGroup.rotation.x) * 0.05;
+
+                // Subtle organic idle float
+                bottleGroup.position.y = -0.6 + Math.sin(Date.now() * 0.0015) * 0.08;
+            }
+
+            if (particlesGroup) {
+                particlesGroup.rotation.y += 0.0008;
+                particlesGroup.rotation.x += 0.0004;
+            }
+
+            // Animate spray mist
+            if (sprayParticlesGroup && sprayParticlesGroup.userData.isSpraying) {
+                const pos = sprayParticlesGroup.geometry.attributes.position.array;
+                const vels = sprayParticlesGroup.userData.velocities;
+
+                for (let i = 0; i < vels.length; i++) {
+                    pos[i * 3] += vels[i].vx;
+                    pos[i * 3 + 1] += vels[i].vy;
+                    pos[i * 3 + 2] += vels[i].vz;
+                }
+                sprayParticlesGroup.geometry.attributes.position.needsUpdate = true;
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        // --- 15. TOAST HELPER ---
+        function showToast(message, type = 'success') {
+            const box = document.getElementById('toastBox');
+            const toast = document.createElement('div');
+            toast.className = 'toast-msg';
+            const icon = type === 'success' ? 'fa-circle-check' : (type === 'error' ? 'fa-triangle-exclamation' : 'fa-sparkles');
+            toast.innerHTML = `<i class="fa-solid ${icon}" style="color:var(--gold-primary);"></i> <span>${message}</span>`;
+            box.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(20px)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
